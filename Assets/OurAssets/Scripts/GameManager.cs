@@ -187,7 +187,7 @@ public class GameManager : MonoBehaviour
 
 	
 	//---------------Currency calculators below--------------------------//
-	#region add Currency Function
+	#region Currency Functions
 	private void addCurrency()
 	{
 		playerCurrency += 1;
@@ -195,6 +195,15 @@ public class GameManager : MonoBehaviour
 		PlayerPrefs.SetInt("Player Currency", playerCurrency);
 		
 	}
+
+	public void lessCurrency(int lessAmount)
+	{
+		playerCurrency -= lessAmount;
+		currencyText.text = "$" + playerCurrency.ToString();
+		PlayerPrefs.SetInt("Player Currency", playerCurrency);
+	}
+
+
 	#endregion
 
 	//------------------------------------------PICK UP FUNCTIONS BELOW------------------------------------------//
@@ -234,8 +243,9 @@ public class GameManager : MonoBehaviour
 		spawnManager.GetComponent<SpawnManager>().pickupAllowed();
 	}
 
-	#region Pickup Functions
+	#region Pickup Functions, contains the pickup functions and there timers.
 	
+	//not entirely sure what this is for.
 	IEnumerator pickUpTimer(float timer)
 	{
 		Debug.Log("Counting");
@@ -243,7 +253,7 @@ public class GameManager : MonoBehaviour
 		yield return new WaitForSeconds(timer);
 	}
 
-
+	//Contains rotation speed pickup timer, also activates and deactivates the extra speed;
 	IEnumerator rotationPickup()
 	{
 		pickupText.text = "Increase Speed";
@@ -263,6 +273,7 @@ public class GameManager : MonoBehaviour
 		pickupText.text = null;
 	}
 
+	//Contains extraPaddle pickup timer, also activates and deactivates the extra paddle gameobject.
 	IEnumerator extraPaddlePickup()
 	{
 		pickupText.text = "Extra Paddle";
@@ -282,6 +293,7 @@ public class GameManager : MonoBehaviour
 		pickupText.text = null;
 	}
 
+	//Contains invincibility pickup timer, also activates and deactivates the invincibility gameobject.
 	IEnumerator oneUseShieldPickup()
 	{
 		pickupText.text = "invincibility";
@@ -301,6 +313,7 @@ public class GameManager : MonoBehaviour
 		pickupText.text = null;
 	}
 
+	//Contains double points pickup timer, also enables and disables the doublepoints bool.
 	IEnumerator doublePointsPickup()
 	{
 		pickupText.text = "Double Points";
@@ -320,6 +333,8 @@ public class GameManager : MonoBehaviour
 		pickupText.text = null;
 	}
 
+
+	//Contains laser beam pickup timer, also activates and deactivates the laserbeam gameobject.
 	IEnumerator laserBeamPickup()
 	{
 		pickupText.text = "Laser Beam";
@@ -338,7 +353,7 @@ public class GameManager : MonoBehaviour
 		laserObject.SetActive(false);
 		pickupText.text = null;
 	}
-#endregion
+#endregion 
 
 
 	//-----------Below for Cooldown pickup Timer------------
@@ -347,12 +362,14 @@ public class GameManager : MonoBehaviour
 		StartCoroutine(spawnCooldown());
 	}
 
+	//This courotine waits until the pickupCooldowntimer is 0, then allows pickups to be spawned.
 	public IEnumerator spawnCooldown()
 	{
 		yield return new WaitForSeconds(pickUpCooldownTimer);
 		spawnManager.GetComponent<SpawnManager>().pickupAllowed();
 	}
 
+	//This function turns the alpha of spawn pickup text to 1, allowing it to be viewable. Text appears at the bottom of the screen.
 	public void pickUpTextViewable()
 	{
 		Color temp = pickupText.color;
@@ -361,12 +378,13 @@ public class GameManager : MonoBehaviour
 		currentPickupText.SetActive(false);
 	}
 
+	//function used to designate a new rotation speed of the player paddal.
 	public void newPlayerSpeed(float speed)
 	{
 		playerControl.GetComponent<PlayerController>().playerSpeedis(speed);
 	}
 
-	#region shield/Health functions
+	#region Contains functions for takeDamage, addShield, check shield amount
 
 	void checkShieldMax()
 	{
@@ -468,6 +486,8 @@ public class GameManager : MonoBehaviour
 		currentShieldAmount = newShield;
 	}
 
+
+	#region Call this function if ever needed to add shield back to the player.
 	public void addShield()
 	{
 		if(currentShieldAmount < shieldMax)
@@ -506,6 +526,7 @@ public class GameManager : MonoBehaviour
 		}
 		
 	}
+	#endregion
 
 
 	#endregion

@@ -45,6 +45,13 @@ public class SpawnManager: MonoBehaviour
 
 	}
 
+
+	///-------------------------------BELOW: Respawn Asteroid Function----------------------------------------------------------
+	/// This function respawnBall() allows the asteroids to spawn from any 4 spawn locations, it's randomised where they spawn using Random.Range.
+	/// However the variable spawnPointAvailable is used to cap which spawn points are accessible 
+	/// eg. if spawnPointAvailable = 2, only case 1 of the switch statement will work.
+	/// Note: This function can totally be tidied up in the future, it may need to be done to allow spawnPoints to be a complete circle around the centre,
+	/// rather then a rectangle. this could stop multiple asteroids hitting the centre at once.
 	#region respawnBall function
 	public void respawnBall()
 	{
@@ -84,6 +91,12 @@ public class SpawnManager: MonoBehaviour
 
 	#endregion
 
+
+	/// --------------------------BELOW: Adjust Variable Functions-----------------------
+	/// This function is called everytime a asteroid is "caught", when a case (num) equals amount of asteroids the player has "caught"
+	/// the case will then adjust variables to increase difficulty.
+	/// NOTE: if implementing Multiplier counter, this will need to count amount of asteroids caught throughout a run, 
+	/// rather than counting the playerscore, as checking against the playerScore wouldn't be the real difficulty curve.
 	#region adjustVariables function
 	public void adjustVariables()
 	{
@@ -316,17 +329,7 @@ public class SpawnManager: MonoBehaviour
 	#endregion
 
 
-	/*Randomise instantiate positions
-	 * Use switches to check score, if higher then eg.50 lower repeatSpawning timer.
-	 * Gradually get faster spawning overtime, to increase difficulty.
-	 * 
-	 * Also need pickups, eg. slow asteroids/slow spawning, provide 2nd space on opposite side of original,
-	 * attach laser/gun to space station allows shooting of asteroids.
-	 * Ability to upgrade pickups in the store, so pickups last longer.(this will assist players getting higher scores)
-	 * Pickups will be activated by floating past on the screen, the player will tap them to activate them.
-	 * 
-	 * 
-	 */
+	//This function spawns the initial 2 asteroids for when the player starts a run.
 	void initialSpawn()
 	{
 		GameObject clonePrefab1 = Instantiate(asteroidPrefab, (spawnPos1.transform.position + new Vector3(Random.Range(-2, 2), -4, 0)), spawnPos1.transform.rotation) as GameObject;
@@ -340,6 +343,9 @@ public class SpawnManager: MonoBehaviour
 		Destroy(clonePrefab1, 10);
 
 	}
+
+	//This function is called when the player starts a run, it will run initialSpawn(), then start spawning the asteroids
+	//and adjust variables when needed.
 	public void startSpawner()
 	{
 		adjustVariables();
@@ -347,6 +353,8 @@ public class SpawnManager: MonoBehaviour
 		StartCoroutine(SpawnTimer());
 	}
 
+	//This corountine counts down how many seconds have past, if hit zero will run respawnBall() to spawn asteroids.
+	//it also runs isPickupSpawnable to see if a pickup is able to be spawned.
 	IEnumerator SpawnTimer()
 	{
 		
@@ -356,6 +364,7 @@ public class SpawnManager: MonoBehaviour
 		StartCoroutine(SpawnTimer());
 	}
 
+	//This function is/should be called when the player has lost the run, it stops the asteroids from spawning.
 	public void stopSpawner()
 	{
 		StopCoroutine(SpawnTimer());
@@ -365,11 +374,9 @@ public class SpawnManager: MonoBehaviour
 
 	//Function to check if pickup is able to spawn, 
 	//which pickup and the percentage chance of it spawning.
-
 	public void isPickupSpawnable()
 	{
 		float randNum = Random.Range(1, 101);
-		//need to call a function here to check if isPickupAllowed
 		if ((randNum >= pickupSpawnChancePrivate) && (isPickupAllowed == true))
 		{
 			isPickupAllowed = false;
@@ -414,6 +421,7 @@ public class SpawnManager: MonoBehaviour
 		}
 	}
 
+	//This function spawns the pickup gameobject from and 4 of the spawnLocations, much like the respawnBall() does.
 	public void spawnPickup(GameObject pickUp)
 	{
 		float randNum = Random.Range(1, spawnPointAvailable);
@@ -452,6 +460,7 @@ public class SpawnManager: MonoBehaviour
 	}
 
 	
+	//This function enables isPickupAllowed = true.
 	public void pickupAllowed()
 	{
 		isPickupAllowed = true;

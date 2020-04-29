@@ -20,14 +20,15 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
+	// Allows keyboard or mobile touch controls.
     void Update()
     {
-
-		RotatePC();
+		touchControls();
 		KeyboardControls();
 	}
 
-	public void RotatePC()
+	//Controls used for mobile.
+	public void touchControls()
 	{
 		if ((Input.touchCount > 0))
 
@@ -57,6 +58,8 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+
+	//Keyboard Controls.
 	void KeyboardControls()
 	{
 		if (Input.GetKey(KeyCode.LeftArrow))
@@ -70,11 +73,13 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	//This function resets the player paddle to it's initial starting location.
 	public void resetPlayer()
 	{
 		me.transform.rotation = new Quaternion(0, 0, 0, 0);
 	}
 
+	//This function is used to update the player paddles rotation speed.
 	public void playerSpeedis(float newSpeed)
 	{
 		playerSpeed = newSpeed;

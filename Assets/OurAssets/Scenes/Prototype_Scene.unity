@@ -3925,7 +3925,7 @@ MonoBehaviour:
   doublePointsTimer: 10
   laserObject: {fileID: 2000473866}
   laserObjTimer: 6
-  pickUpCooldownTimer: 15
+  pickUpCooldownTimer: 5
   textFadeClip: {fileID: 7400000, guid: 23d957f0860643f46962901d2bb9957b, type: 2}
   shieldMax: 0
   shieldBar1: {fileID: 193311019}

@@ -271,6 +271,7 @@ public class GameManager : MonoBehaviour
 		//Debug.Log("rotate deactive");
 		playerControl.GetComponent<PlayerController>().playerSpeed = currentSpeed;
 		pickupText.text = null;
+		pickUpSpawnCooldown();
 	}
 
 	//Contains extraPaddle pickup timer, also activates and deactivates the extra paddle gameobject.
@@ -291,6 +292,7 @@ public class GameManager : MonoBehaviour
 		//Debug.Log("paddle deactive");
 		secondPaddle.SetActive(false);
 		pickupText.text = null;
+		pickUpSpawnCooldown();
 	}
 
 	//Contains invincibility pickup timer, also activates and deactivates the invincibility gameobject.
@@ -311,6 +313,7 @@ public class GameManager : MonoBehaviour
 		//Debug.Log("shield deactive");
 		shieldObject.SetActive(false);
 		pickupText.text = null;
+		pickUpSpawnCooldown();
 	}
 
 	//Contains double points pickup timer, also enables and disables the doublepoints bool.
@@ -331,6 +334,7 @@ public class GameManager : MonoBehaviour
 		//Debug.Log("double points deactive");
 		isDoublePointsActive = false;
 		pickupText.text = null;
+		pickUpSpawnCooldown();
 	}
 
 
@@ -352,6 +356,7 @@ public class GameManager : MonoBehaviour
 		//Debug.Log("laser deactive");
 		laserObject.SetActive(false);
 		pickupText.text = null;
+		pickUpSpawnCooldown();
 	}
 #endregion 
 
@@ -362,7 +367,8 @@ public class GameManager : MonoBehaviour
 		StartCoroutine(spawnCooldown());
 	}
 
-	//This courotine waits until the pickupCooldowntimer is 0, then allows pickups to be spawned.
+	//This courotine waits until the is 0, then allows pickups to be spawned.
+	//pickUpCooldownTimer is declared in the inspector window.
 	public IEnumerator spawnCooldown()
 	{
 		yield return new WaitForSeconds(pickUpCooldownTimer);

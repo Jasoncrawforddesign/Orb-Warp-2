@@ -84,6 +84,13 @@ public class GameManager : MonoBehaviour
 	public GameObject emptyShieldBar4;
 	public GameObject emptyShieldBar5;
 
+	public int asteroidCounter;
+	private int tempAsteroidCounter;
+	public int asteroidsNeededToMultiply;
+
+	public Text scoreMultiplierText;
+	public int scoreMultiplier = 1;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -122,18 +129,34 @@ public class GameManager : MonoBehaviour
 	{
 		if (isDoublePointsActive == true)
 		{
-			currentScore += 2;
+			currentScore += 2 * scoreMultiplier;
 			scoreText.text = currentScore.ToString();
 			spawnManager.GetComponent<SpawnManager>().adjustVariables();
 			addCurrency();
 		}
 		else
 		{
-			currentScore += 1;
+			currentScore += 1 * scoreMultiplier;
 			scoreText.text = currentScore.ToString();
 			spawnManager.GetComponent<SpawnManager>().adjustVariables();
 			addCurrency();
 		}
+
+		//if (isDoublePointsActive == true)
+		//{
+		//	currentScore += 2;
+		//	scoreText.text = currentScore.ToString();
+		//	spawnManager.GetComponent<SpawnManager>().adjustVariables();
+		//	addCurrency();
+		//}
+		//else
+		//{
+		//	currentScore += 1;
+		//	scoreText.text = currentScore.ToString();
+		//	spawnManager.GetComponent<SpawnManager>().adjustVariables();
+		//	addCurrency();
+		//}
+
 	}
 	#endregion
 
@@ -167,6 +190,8 @@ public class GameManager : MonoBehaviour
 		}
 		currentScore = 0;
 		scoreText.text = currentScore.ToString();
+		scoreMultiplierText.text = null;
+		asteroidCounter = 0;
 	}
 
 	#endregion
@@ -490,6 +515,10 @@ public class GameManager : MonoBehaviour
 
 		}
 		currentShieldAmount = newShield;
+
+		scoreMultiplier = 1;
+		scoreMultiplierText.text = null;
+		tempAsteroidCounter = 0;
 	}
 
 
@@ -537,6 +566,18 @@ public class GameManager : MonoBehaviour
 
 	#endregion
 
+	public void countAsteroid()
+	{
+		asteroidCounter += 1;
+		tempAsteroidCounter += 1;
 
+		if(tempAsteroidCounter >= asteroidsNeededToMultiply)
+		{
+			scoreMultiplier += 1;
+			tempAsteroidCounter = 0;
+			scoreMultiplierText.text = "x " + scoreMultiplier.ToString();
+
+		}
+	}
 
 }

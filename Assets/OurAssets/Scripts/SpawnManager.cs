@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnManager: MonoBehaviour
 {
-	private int playerScore;
+	private int playerAsteroidCount;
 	public GameObject gm;
 	public GameObject asteroidPrefab;
 	private float asteroidSpeed;
@@ -44,7 +44,6 @@ public class SpawnManager: MonoBehaviour
     {
 
 	}
-
 
 	///-------------------------------BELOW: Respawn Asteroid Function----------------------------------------------------------
 	/// This function respawnBall() allows the asteroids to spawn from any 4 spawn locations, it's randomised where they spawn using Random.Range.
@@ -96,14 +95,14 @@ public class SpawnManager: MonoBehaviour
 	/// This function is called everytime a asteroid is "caught", when a case (num) equals amount of asteroids the player has "caught"
 	/// the case will then adjust variables to increase difficulty.
 	/// NOTE: if implementing Multiplier counter, this will need to count amount of asteroids caught throughout a run, 
-	/// rather than counting the playerscore, as checking against the playerScore wouldn't be the real difficulty curve.
+	/// rather than counting the playerAsteroidCount, as checking against the playerAsteroidCount wouldn't be the real difficulty curve.
 	#region adjustVariables function
 	public void adjustVariables()
 	{
-		playerScore = gm.GetComponent<GameManager>().currentScore;
+		playerAsteroidCount = gm.GetComponent<GameManager>().asteroidCounter;
 		float newPlayerSpeed;
 
-		switch (playerScore)
+		switch (playerAsteroidCount)
 		{
 			case 0:
 				asteroidSpeed = 4;
@@ -300,7 +299,7 @@ public class SpawnManager: MonoBehaviour
 
 	void adjustedVariableInfo()
 	{
-		Debug.Log("Case:" + playerScore + ".");
+		Debug.Log("Case:" + playerAsteroidCount + ".");
 		Debug.Log("Asteroid Speed is now: " + asteroidSpeed);
 		Debug.Log("Repeat Spawning every " + repeatSpawning + " seconds.");
 	}
@@ -351,6 +350,7 @@ public class SpawnManager: MonoBehaviour
 		adjustVariables();
 		initialSpawn();
 		StartCoroutine(SpawnTimer());
+
 	}
 
 	//This corountine counts down how many seconds have past, if hit zero will run respawnBall() to spawn asteroids.

@@ -58,13 +58,12 @@ public class Basic_Asteroid_Function : MonoBehaviour
 			if (collision.gameObject.tag == "SpaceStation")
 			{
 				gm.GetComponent<GameManager>().addScore();
+				gm.GetComponent<GameManager>().countAsteroid();
 				Destroy(this.gameObject);
 			}
 
 			if (collision.gameObject.tag == "Earth")
 			{
-				//Lose Game Code enter here
-				//gm.GetComponent<GameManager>().MainMenu();
 				gm.GetComponent<GameManager>().takeDamage();
 				Destroy(this.gameObject);
 			}

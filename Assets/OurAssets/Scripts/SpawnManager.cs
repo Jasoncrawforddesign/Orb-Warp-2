@@ -17,6 +17,11 @@ public class SpawnManager: MonoBehaviour
 	public GameObject spawnPos4;
 	private int spawnPointAvailable;
 
+	public GameObject[] spawnPositions;
+	private GameObject currentSpawn;
+	private int spawnPositionsIndex;
+
+
 	public GameObject rotationSpeedPickupPrefab;
 	public GameObject extraPaddlePickupPrefab;
 	public GameObject oneUseShieldPickupPrefab;
@@ -37,6 +42,7 @@ public class SpawnManager: MonoBehaviour
     void Start()
     {
 		pickupSpawnChancePrivate = pickupSpawnChance;
+		spawnPositions = GameObject.FindGameObjectsWithTag("spawnPos");
 	}
 
     // Update is called once per frame
@@ -51,45 +57,57 @@ public class SpawnManager: MonoBehaviour
 	/// eg. if spawnPointAvailable = 2, only case 1 of the switch statement will work.
 	/// Note: This function can totally be tidied up in the future, it may need to be done to allow spawnPoints to be a complete circle around the centre,
 	/// rather then a rectangle. this could stop multiple asteroids hitting the centre at once.
-	#region respawnBall function
-	public void respawnBall()
-	{
-		float randNum = Random.Range (1, spawnPointAvailable);
+	#region respawnBall function OLD
+	//public void respawnBall()
+	//{
+	//	float randNum = Random.Range (1, spawnPointAvailable);
 
-		switch (randNum)
-		{
-			case 1:
-				GameObject clonePrefab1 = Instantiate(asteroidPrefab, (spawnPos1.transform.position + new Vector3(Random.Range(-10, 10), 0, 0)), spawnPos1.transform.rotation) as GameObject;
-				clonePrefab1.name = "Asteroid";
-				clonePrefab1.GetComponent<Basic_Asteroid_Function>().moveSpeed = asteroidSpeed;
-				Destroy(clonePrefab1, 10);
-				break;
+	//	switch (randNum)
+	//	{
+	//		case 1:
+	//			GameObject clonePrefab1 = Instantiate(asteroidPrefab, (spawnPos1.transform.position + new Vector3(Random.Range(-10, 10), 0, 0)), spawnPos1.transform.rotation) as GameObject;
+	//			clonePrefab1.name = "Asteroid";
+	//			clonePrefab1.GetComponent<Basic_Asteroid_Function>().moveSpeed = asteroidSpeed;
+	//			Destroy(clonePrefab1, 10);
+	//			break;
 
-			case 2:
-				GameObject clonePrefab2 = Instantiate(asteroidPrefab, (spawnPos2.transform.position + new Vector3(0, Random.Range(-10, 10), 0)), spawnPos2.transform.rotation) as GameObject;
-				clonePrefab2.name = "Asteroid";
-				clonePrefab2.GetComponent<Basic_Asteroid_Function>().moveSpeed = asteroidSpeed;
-				Destroy(clonePrefab2, 10);
-				break;
+	//		case 2:
+	//			GameObject clonePrefab2 = Instantiate(asteroidPrefab, (spawnPos2.transform.position + new Vector3(0, Random.Range(-10, 10), 0)), spawnPos2.transform.rotation) as GameObject;
+	//			clonePrefab2.name = "Asteroid";
+	//			clonePrefab2.GetComponent<Basic_Asteroid_Function>().moveSpeed = asteroidSpeed;
+	//			Destroy(clonePrefab2, 10);
+	//			break;
 
-			case 3:
-				GameObject clonePrefab3 = Instantiate(asteroidPrefab, (spawnPos3.transform.position + new Vector3(0, Random.Range(-10, 10), 0)), spawnPos3.transform.rotation) as GameObject;
-				clonePrefab3.name = "Asteroid";
-				clonePrefab3.GetComponent<Basic_Asteroid_Function>().moveSpeed = asteroidSpeed;
-				Destroy(clonePrefab3, 10);
-				break;
+	//		case 3:
+	//			GameObject clonePrefab3 = Instantiate(asteroidPrefab, (spawnPos3.transform.position + new Vector3(0, Random.Range(-10, 10), 0)), spawnPos3.transform.rotation) as GameObject;
+	//			clonePrefab3.name = "Asteroid";
+	//			clonePrefab3.GetComponent<Basic_Asteroid_Function>().moveSpeed = asteroidSpeed;
+	//			Destroy(clonePrefab3, 10);
+	//			break;
 
-			case 4:
-				GameObject clonePrefab4 = Instantiate(asteroidPrefab, (spawnPos4.transform.position + new Vector3(Random.Range(-10, 10), 0, 0)), spawnPos4.transform.rotation) as GameObject;
-				clonePrefab4.name = "Asteroid";
-				clonePrefab4.GetComponent<Basic_Asteroid_Function>().moveSpeed = asteroidSpeed;
-				Destroy(clonePrefab4, 10);
-				break;
-		}
-	}
+	//		case 4:
+	//			GameObject clonePrefab4 = Instantiate(asteroidPrefab, (spawnPos4.transform.position + new Vector3(Random.Range(-10, 10), 0, 0)), spawnPos4.transform.rotation) as GameObject;
+	//			clonePrefab4.name = "Asteroid";
+	//			clonePrefab4.GetComponent<Basic_Asteroid_Function>().moveSpeed = asteroidSpeed;
+	//			Destroy(clonePrefab4, 10);
+	//			break;
+	//	}
+	//}
 
 	#endregion
 
+	#region current respawnBall function
+	public void respawnBall()
+	{
+		spawnPositionsIndex = Random.Range(0, spawnPositions.Length);
+		currentSpawn = spawnPositions[spawnPositionsIndex];
+
+		GameObject clonePrefab1 = Instantiate(asteroidPrefab, currentSpawn.transform.position, Quaternion.identity) as GameObject;
+		clonePrefab1.name = "Asteroid";
+		clonePrefab1.GetComponent<Basic_Asteroid_Function>().moveSpeed = asteroidSpeed;
+		Destroy(clonePrefab1, 10);
+	}
+	#endregion
 
 	/// --------------------------BELOW: Adjust Variable Functions-----------------------
 	/// This function is called everytime a asteroid is "caught", when a case (num) equals amount of asteroids the player has "caught"
@@ -115,92 +133,19 @@ public class SpawnManager: MonoBehaviour
 				adjustedVariableInfo();
 				break;
 
+			//case 5:
+			//	asteroidSpeed = 4;
+			//	repeatSpawning = 1.5f;
+			//	spawnPointAvailable = 3;
+
+			//	newPlayerSpeed = 30;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+
+			//	adjustedVariableInfo();
+			//	break;
 			case 5:
 				asteroidSpeed = 4;
-				repeatSpawning = 1.5f;
-				spawnPointAvailable = 3;
-
-				newPlayerSpeed = 30;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
-
-				adjustedVariableInfo();
-				break;
-
-			case 15:
-				asteroidSpeed = 4;
-				repeatSpawning = 1;
-				spawnPointAvailable = 4;
-
-				newPlayerSpeed = 30;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
-
-				adjustedVariableInfo();
-				break;
-
-			case 30:
-				asteroidSpeed = 5;
-				repeatSpawning = 1.5f;
-				spawnPointAvailable = 5;
-
-				newPlayerSpeed = 35;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
-
-				adjustedVariableInfo();
-				break;
-
-			case 50:
-				asteroidSpeed = 5;
-				repeatSpawning = 1.3f;
-
-				newPlayerSpeed = 35;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
-
-				adjustedVariableInfo();
-				break;
-
-			case 60:
-				asteroidSpeed = 5;
-				repeatSpawning = 1.2f;
-
-				newPlayerSpeed = 35;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
-
-				adjustedVariableInfo();
-				break;
-
-			case 70:
-				asteroidSpeed = 5;
-				repeatSpawning = 1;
-
-				newPlayerSpeed = 35;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
-
-				adjustedVariableInfo();
-				break;
-
-			case 80:
-				asteroidSpeed = 5;
-				repeatSpawning = .8f;
-
-				newPlayerSpeed = 35;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
-
-				adjustedVariableInfo();
-				break;
-
-			case 100:
-				asteroidSpeed = 5;
-				repeatSpawning = .7f;
-
-				newPlayerSpeed = 35;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
-
-				adjustedVariableInfo();
-				break;
-
-			case 120:
-				asteroidSpeed = 5.2f;
-				repeatSpawning = 1.2f;
+				repeatSpawning = .5f;
 
 				newPlayerSpeed = 40;
 				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
@@ -208,85 +153,168 @@ public class SpawnManager: MonoBehaviour
 				adjustedVariableInfo();
 				break;
 
-			case 140:
-				asteroidSpeed = 5.4f;
-				repeatSpawning = 1.1f;
 
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+			//case 15:
+			//	asteroidSpeed = 4;
+			//	repeatSpawning = 1;
+			//	spawnPointAvailable = 4;
 
-				adjustedVariableInfo();
-				break;
+			//	newPlayerSpeed = 30;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
-			case 160:
-				asteroidSpeed = 5.6f;
-				repeatSpawning = 1;
+			//	adjustedVariableInfo();
+			//	break;
 
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+			//case 30:
+			//	asteroidSpeed = 5;
+			//	repeatSpawning = 1.5f;
+			//	spawnPointAvailable = 5;
 
-				adjustedVariableInfo();
-				break;
+			//	newPlayerSpeed = 35;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
-			case 170:
-				asteroidSpeed = 6;
-				repeatSpawning = 1;
+			//	adjustedVariableInfo();
+			//	break;
 
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+			//case 50:
+			//	asteroidSpeed = 5;
+			//	repeatSpawning = 1.3f;
 
-				adjustedVariableInfo();
-				break;
+			//	newPlayerSpeed = 35;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
-			case 180:
-				asteroidSpeed = 6;
-				repeatSpawning = .8f;
+			//	adjustedVariableInfo();
+			//	break;
 
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+			//case 60:
+			//	asteroidSpeed = 5;
+			//	repeatSpawning = 1.2f;
 
-				adjustedVariableInfo();
-				break;
+			//	newPlayerSpeed = 35;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
-			case 190:
-				asteroidSpeed = 6;
-				repeatSpawning = .6f;
+			//	adjustedVariableInfo();
+			//	break;
 
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+			//case 70:
+			//	asteroidSpeed = 5;
+			//	repeatSpawning = 1;
 
-				adjustedVariableInfo();
-				break;
+			//	newPlayerSpeed = 35;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
-			case 200:
-				asteroidSpeed = 7;
-				repeatSpawning = 1.2f;
+			//	adjustedVariableInfo();
+			//	break;
 
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+			//case 80:
+			//	asteroidSpeed = 5;
+			//	repeatSpawning = .8f;
 
-				adjustedVariableInfo();
-				break;
+			//	newPlayerSpeed = 35;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
-			case 225:
-				asteroidSpeed = 6.5f;
-				repeatSpawning = .8f;
+			//	adjustedVariableInfo();
+			//	break;
 
-				newPlayerSpeed = 45;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+			//case 100:
+			//	asteroidSpeed = 5;
+			//	repeatSpawning = .7f;
 
-				adjustedVariableInfo();
-				break;
+			//	newPlayerSpeed = 35;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
-			case 250:
-				asteroidSpeed = 6.5f;
-				repeatSpawning = 0.6f;
+			//	adjustedVariableInfo();
+			//	break;
 
-				newPlayerSpeed = 50;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+			//case 120:
+			//	asteroidSpeed = 5.2f;
+			//	repeatSpawning = 1.2f;
 
-				adjustedVariableInfo();
-				break;
+			//	newPlayerSpeed = 40;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+
+			//	adjustedVariableInfo();
+			//	break;
+
+			//case 140:
+			//	asteroidSpeed = 5.4f;
+			//	repeatSpawning = 1.1f;
+
+			//	newPlayerSpeed = 40;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+
+			//	adjustedVariableInfo();
+			//	break;
+
+			//case 160:
+			//	asteroidSpeed = 5.6f;
+			//	repeatSpawning = 1;
+
+			//	newPlayerSpeed = 40;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+
+			//	adjustedVariableInfo();
+			//	break;
+
+			//case 170:
+			//	asteroidSpeed = 6;
+			//	repeatSpawning = 1;
+
+			//	newPlayerSpeed = 40;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+
+			//	adjustedVariableInfo();
+			//	break;
+
+			//case 180:
+			//	asteroidSpeed = 6;
+			//	repeatSpawning = .8f;
+
+			//	newPlayerSpeed = 40;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+
+			//	adjustedVariableInfo();
+			//	break;
+
+			//case 190:
+			//	asteroidSpeed = 6;
+			//	repeatSpawning = .6f;
+
+			//	newPlayerSpeed = 40;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+
+			//	adjustedVariableInfo();
+			//	break;
+
+			//case 200:
+			//	asteroidSpeed = 7;
+			//	repeatSpawning = 1.2f;
+
+			//	newPlayerSpeed = 40;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+
+			//	adjustedVariableInfo();
+			//	break;
+
+			//case 225:
+			//	asteroidSpeed = 6.5f;
+			//	repeatSpawning = .8f;
+
+			//	newPlayerSpeed = 45;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+
+			//	adjustedVariableInfo();
+			//	break;
+
+			//case 250:
+			//	asteroidSpeed = 6.5f;
+			//	repeatSpawning = 0.6f;
+
+			//	newPlayerSpeed = 50;
+			//	gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+
+			//	adjustedVariableInfo();
+			//	break;
 
 
 			default:

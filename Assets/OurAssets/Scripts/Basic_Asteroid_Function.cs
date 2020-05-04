@@ -83,25 +83,25 @@ public class Basic_Asteroid_Function : MonoBehaviour
 			{
 				//activate the pickup Ability
 				gm.GetComponent<GameManager>().pickupType(typeNum);
+
 				Destroy(this.gameObject);
 			}
 
 			if (collision.gameObject.tag == "Earth")
 			{
 				Destroy(this.gameObject);
+				gm.GetComponent<GameManager>().pickUpAllowed();
 			}
 		}
 		
 	}
 
-	//This function is called when this GameObject is a Pickup Item, and has been destroyed.
-	//it will run gm.GetComponent<GameManager>().pickupType(typeNum), which will run the correct pickUp Function.
-	private void OnDestroy()
+
+	public void hitByLaser()
 	{
-		if (isPickup == true)
-		{
-			gm.GetComponent<GameManager>().pickupType(typeNum);
-		}
+		gm.GetComponent<GameManager>().addScore();
+		gm.GetComponent<GameManager>().countAsteroid();
+		Destroy(this.gameObject);
 	}
 
 	// this function checks what the pickup this gameObject is intended to be

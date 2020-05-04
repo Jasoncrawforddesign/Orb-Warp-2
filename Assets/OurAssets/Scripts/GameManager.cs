@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Animations;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+
+	public ParticleSystem asteroidParticlePrefab;
+
 	public GameObject spawnManager;
 	public GameObject playerControl;
 
@@ -91,6 +95,9 @@ public class GameManager : MonoBehaviour
 	public Text scoreMultiplierText;
 	public int scoreMultiplier = 1;
 
+	public GameObject test_ring;
+	public GameObject cameraMain;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -121,7 +128,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+		//laserBeamRayCast();
 	}
 
 	#region Add Score Function
@@ -142,33 +149,34 @@ public class GameManager : MonoBehaviour
 			addCurrency();
 		}
 
-		//if (isDoublePointsActive == true)
-		//{
-		//	currentScore += 2;
-		//	scoreText.text = currentScore.ToString();
-		//	spawnManager.GetComponent<SpawnManager>().adjustVariables();
-		//	addCurrency();
-		//}
-		//else
-		//{
-		//	currentScore += 1;
-		//	scoreText.text = currentScore.ToString();
-		//	spawnManager.GetComponent<SpawnManager>().adjustVariables();
-		//	addCurrency();
-		//}
-
 	}
 	#endregion
 
-
-	#region Use this function to load the Main Menu/stop the run.
-	public void MainMenu()
+	void destroyAsteroids() //need to call animation to show visual destruction of asteroids, fast growing/exploding circle (orange like the paddle).
 	{
 		//Destroys all Asteroids left in the game.
 		foreach (GameObject asteroid in GameObject.FindGameObjectsWithTag("Asteroid"))
 		{
+
+			ParticleSystem asteroidBoom = Instantiate (asteroidParticlePrefab, asteroid.transform.position, asteroid.transform.rotation) as ParticleSystem;
+			asteroidBoom.name = "particle";
+			asteroidBoom.Play();
+			Destroy(asteroidBoom.gameObject, 3);
 			Destroy(asteroid);
 		}
+		test_ring.GetComponent<DOTweenAnimation>().DOPlay();
+		test_ring.GetComponent<DOTweenAnimation>().DORestart();
+
+		cameraMain.GetComponent<DOTweenAnimation>().DOPlay();
+		cameraMain.GetComponent<DOTweenAnimation>().DORestart();
+
+		pickUpAllowed();
+
+	}
+	#region Use this function to load the Main Menu/stop the run.
+	public void MainMenu()
+	{
+		destroyAsteroids();
 		currentSpeed = playerControl.GetComponent<PlayerController>().playerSpeed;
 		//Stops all the neccesary objects.
 		spawnManager.GetComponent<SpawnManager>().stopSpawner();
@@ -420,7 +428,7 @@ public class GameManager : MonoBehaviour
 	void checkShieldMax()
 	{
 		//how much shield the player starts with, will be linked to amount of upgrades.
-		shieldMax = 5;
+		shieldMax = 3;
 		currentShieldAmount = shieldMax;
 
 		switch (shieldMax)
@@ -491,26 +499,31 @@ public class GameManager : MonoBehaviour
 			case 0:
 				shieldBar1.SetActive(false);
 				emptyShieldBar1.SetActive(true);
+				destroyAsteroids();
 				break;
 
 			case 1:
 				shieldBar2.SetActive(false);
 				emptyShieldBar2.SetActive(true);
+				destroyAsteroids();
 				break;
 
 			case 2:
 				shieldBar3.SetActive(false);
 				emptyShieldBar3.SetActive(true);
+				destroyAsteroids();
 				break;
 
 			case 3:
 				shieldBar4.SetActive(false);
 				emptyShieldBar4.SetActive(true);
+				destroyAsteroids();
 				break;
 
 			case 4:
 				shieldBar5.SetActive(false);
 				emptyShieldBar5.SetActive(true);
+				destroyAsteroids();
 				break;
 
 		}
@@ -579,5 +592,6 @@ public class GameManager : MonoBehaviour
 
 		}
 	}
+
 
 }

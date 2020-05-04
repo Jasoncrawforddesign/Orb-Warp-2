@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2747380556137825708}
   - component: {fileID: 2747380556137825711}
   - component: {fileID: 198846761215095931}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Asteroid
   m_TagString: Asteroid
   m_Icon: {fileID: 0}
@@ -141,4 +141,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: -0.015611976, y: 0.0078059435}
   serializedVersion: 2
-  m_Radius: 0.15267912
+  m_Radius: 0.25

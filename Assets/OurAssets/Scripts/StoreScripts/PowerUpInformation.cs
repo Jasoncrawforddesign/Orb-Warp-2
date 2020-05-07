@@ -10,9 +10,6 @@ public class PowerUpInformation : ScriptableObject
 
 	public Sprite artwork;
 
-	public int upgradeCost;
-
-	public int currentLevel;
 
 
 }

@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 	public GameObject Settings_Panel;
 	public GameObject Shop_Panel;
 
-	private int playerCurrency;
+	public int playerCurrency;
 	public Text currencyText;
 
 	[Header("Pickup Variables Below")]

@@ -15,6 +15,7 @@ public static class SaveSystem
 		}
 		else
 		{
+			gm.resetGame();
 			BinaryFormatter formatter = new BinaryFormatter();
 			FileStream stream = new FileStream(path, FileMode.Create);
 

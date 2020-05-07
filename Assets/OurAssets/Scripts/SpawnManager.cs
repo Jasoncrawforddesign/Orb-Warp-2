@@ -286,7 +286,7 @@ public class SpawnManager: MonoBehaviour
 				adjustedVariableInfo();
 				break;
 
-			case 80:
+			case 100:
 				asteroidSpeed = 6;
 				repeatSpawning = .7f;
 
@@ -296,7 +296,7 @@ public class SpawnManager: MonoBehaviour
 				adjustedVariableInfo();
 				break;
 
-			case 85:
+			case 110:
 				asteroidSpeed = 6;
 				repeatSpawning = .6f;
 
@@ -306,7 +306,7 @@ public class SpawnManager: MonoBehaviour
 				adjustedVariableInfo();
 				break;
 
-			case 100:
+			case 115:
 				asteroidSpeed = 6f;
 				repeatSpawning = 0.5f;
 
@@ -316,7 +316,7 @@ public class SpawnManager: MonoBehaviour
 				adjustedVariableInfo();
 				break;
 
-			case 150:
+			case 125:
 				asteroidSpeed = 6f;
 				repeatSpawning = 0.4f;
 

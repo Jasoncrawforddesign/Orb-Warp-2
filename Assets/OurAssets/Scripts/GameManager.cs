@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
 	public AdManager adManager;
 	public StoreManager storeManager;
+	public GameObject endGamePopupObject;
 
 	public ParticleSystem asteroidParticlePrefab;
 
@@ -113,7 +114,6 @@ public class GameManager : MonoBehaviour
 		//check see if there is a save.
 		// it will then LoadPlayer data if a save already exists.
 		SaveSystem.InitialSave(this);
-
 		//Assigning Highscores
 		highScoreText.text = highScore.ToString();
 		currencyText.text = "$" + playerCurrency.ToString();
@@ -126,6 +126,7 @@ public class GameManager : MonoBehaviour
 		currentSpeed = playerControl.GetComponent<PlayerController>().playerSpeed;
 
 		//Loading Main Menu UI
+		endRun();
 		MainMenu();
 
 		//currentPickupText.text = "";
@@ -141,6 +142,7 @@ public class GameManager : MonoBehaviour
 	}
 
 	#region Add Score Function
+
 	public void addScore()
 	{
 		if (isDoublePointsActive == true)
@@ -148,14 +150,13 @@ public class GameManager : MonoBehaviour
 			currentScore += 2 * scoreMultiplier;
 			scoreText.text = currentScore.ToString();
 			spawnManager.GetComponent<SpawnManager>().adjustVariables();
-			addCurrency();
+			
 		}
 		else
 		{
 			currentScore += 1 * scoreMultiplier;
 			scoreText.text = currentScore.ToString();
 			spawnManager.GetComponent<SpawnManager>().adjustVariables();
-			addCurrency();
 		}
 
 	}
@@ -185,7 +186,24 @@ public class GameManager : MonoBehaviour
 	#region Use this function to load the Main Menu/stop the run.
 	public void MainMenu()
 	{
+		//Turns on the Main menu, checks currect score against highscore, updating highscore when needed.
+		MainMenu_Panel.SetActive(true);
+	}
+
+	void endRun()
+	{
 		destroyAsteroids();
+
+		if (currentScore > highScore)
+		{
+			highScore = currentScore;
+			highScoreText.text = "New HighScore: " + highScore.ToString();
+			SaveGame();
+
+		}else
+		{
+			highScoreText.text = "High Score: " + highScore.ToString();
+		}
 		currentSpeed = playerControl.GetComponent<PlayerController>().playerSpeed;
 		//Stops all the neccesary objects.
 		spawnManager.GetComponent<SpawnManager>().stopSpawner();
@@ -196,20 +214,7 @@ public class GameManager : MonoBehaviour
 		secondPaddle.SetActive(false);
 		playerControl.GetComponent<PlayerController>().playerSpeed = currentSpeed;
 		gui_Panel.SetActive(false);
-
-		//Turns on the Main menu, checks currect score against highscore, updating highscore when needed.
-		MainMenu_Panel.SetActive(true);
-		if(currentScore > highScore)
-		{
-			highScore = currentScore;
-			highScoreText.text = highScore.ToString();
-			SaveGame();
-
-		}
-		currentScore = 0;
-		scoreText.text = currentScore.ToString();
-		scoreMultiplierText.text = null;
-		asteroidCounter = 0;
+		endGamePopupObject.SetActive(false);
 	}
 
 	#endregion
@@ -217,6 +222,12 @@ public class GameManager : MonoBehaviour
 	#region Use this function to start a run
 	public void playGame()
 	{
+		currentScore = 0;
+		scoreText.text = currentScore.ToString();
+		scoreMultiplierText.text = null;
+		asteroidCounter = 0;
+
+		endGamePopupObject.SetActive(false);
 		MainMenu_Panel.SetActive(false);
 		playerControl.GetComponent<PlayerController>().resetPlayer();
 		gui_Panel.SetActive(true);
@@ -231,9 +242,9 @@ public class GameManager : MonoBehaviour
 	
 	//---------------Currency calculators below--------------------------//
 	#region Currency Functions
-	private void addCurrency()
+	public void addCurrency(int cash)
 	{
-		playerCurrency += 1;
+		playerCurrency += cash;
 		currencyText.text = "$" + playerCurrency.ToString();
 		
 	}
@@ -501,9 +512,13 @@ public class GameManager : MonoBehaviour
 		switch (newShield)
 		{
 			case -1:
+				endRun();
 				SaveGame();
+				endGamePopupObject.SetActive(true);
+				endGamePopupObject.GetComponent<EndGame_Popup>().updateVariables();
+				endGamePopupObject.GetComponent<EndGame_Popup>().updateText();
 				//adManager.DisplayAd();
-				MainMenu();
+				//MainMenu();
 				break;
 
 			case 0:

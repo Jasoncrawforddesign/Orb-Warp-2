@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 {
 
 	public AdManager adManager;
+	public StoreManager storeManager;
 
 	public ParticleSystem asteroidParticlePrefab;
 
@@ -19,7 +20,7 @@ public class GameManager : MonoBehaviour
 	public Text scoreText;
 	public int currentScore;
 
-	private int highScore;
+	public int highScore;
 	public Text highScoreText;
 
 	public GameObject gui_Panel;
@@ -100,17 +101,23 @@ public class GameManager : MonoBehaviour
 	public GameObject test_ring;
 	public GameObject cameraMain;
 
+	public int speedLevel;
+	public int invincibilityLevel;
+	public int doublePointsLevel;
+	public int extraPaddleLevel;
+	public int laserbeamLevel;
+
 	// Start is called before the first frame update
 	void Start()
     {
+		//check see if there is a save.
+		// it will then LoadPlayer data if a save already exists.
+		SaveSystem.InitialSave(this);
+
 		//Assigning Highscores
-		highScore = PlayerPrefs.GetInt("HighScore", highScore);
 		highScoreText.text = highScore.ToString();
-
-		//Loading Players Currency, and assigning private variables.
-		playerCurrency = PlayerPrefs.GetInt("Player Currency", playerCurrency);
 		currencyText.text = "$" + playerCurrency.ToString();
-
+		MainMenu_Panel.SetActive(true);
 		//Loading pickUpText components and assigning private variables.
 		pickupText = currentPickupText.GetComponent<Text>();
 		pickUpAnim = currentPickupText.GetComponent<Animator>();
@@ -196,7 +203,8 @@ public class GameManager : MonoBehaviour
 		{
 			highScore = currentScore;
 			highScoreText.text = highScore.ToString();
-			PlayerPrefs.SetInt("HighScore", highScore);
+			SaveGame();
+
 		}
 		currentScore = 0;
 		scoreText.text = currentScore.ToString();
@@ -227,7 +235,6 @@ public class GameManager : MonoBehaviour
 	{
 		playerCurrency += 1;
 		currencyText.text = "$" + playerCurrency.ToString();
-		PlayerPrefs.SetInt("Player Currency", playerCurrency);
 		
 	}
 
@@ -235,7 +242,6 @@ public class GameManager : MonoBehaviour
 	{
 		playerCurrency -= lessAmount;
 		currencyText.text = "$" + playerCurrency.ToString();
-		PlayerPrefs.SetInt("Player Currency", playerCurrency);
 	}
 
 
@@ -495,7 +501,8 @@ public class GameManager : MonoBehaviour
 		switch (newShield)
 		{
 			case -1:
-				adManager.DisplayAd();
+				SaveGame();
+				//adManager.DisplayAd();
 				MainMenu();
 				break;
 
@@ -597,4 +604,62 @@ public class GameManager : MonoBehaviour
 	}
 
 
+	public void SaveGame()
+	{
+		//storeManager.SaveItemLevels();
+		SaveSystem.SaveGameManager(this);
+	}
+
+	public void LoadPlayer()
+	{
+		GameManagerData data = SaveSystem.LoadGameManager();
+		playerCurrency = data.playerCurrency;
+
+		highScore = data.highScore;
+
+		speedLevel = data.speedLevel;
+		rotationSpeedTimer = data.speedTimer;
+
+		invincibilityLevel = data.invincibilityLevel;
+		shieldObjTimer = data.invincibilityTimer;
+
+		doublePointsLevel = data.doublePointsLevel;
+		doublePointsTimer = data.doublePointsTimer;
+
+		extraPaddleLevel = data.extraPaddleLevel;
+		extraPaddleTimer = data.extraPaddleTimer;
+
+		laserbeamLevel = data.laserbeamLevel;
+		laserObjTimer = data.laserbeamTimer;
+
+		storeManager.checkStoreInformation();
+	}
+
+
+	public void resetGame()
+	{
+		playerCurrency = 0;
+		highScore = 0;
+
+		speedLevel = 0;
+		rotationSpeedTimer = 10;
+
+		invincibilityLevel = 0;
+		shieldObjTimer = 10;
+
+		doublePointsLevel = 0;
+		doublePointsTimer = 10;
+
+		extraPaddleLevel = 0;
+		extraPaddleTimer = 10;
+
+		laserbeamLevel = 0;
+		laserObjTimer = 6;
+
+		highScoreText.text = highScore.ToString();
+		currencyText.text = "$" + playerCurrency.ToString();
+
+		storeManager.checkStoreInformation();
+		SaveSystem.SaveGameManager(this);
+	}
 }

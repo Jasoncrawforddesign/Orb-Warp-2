@@ -11,19 +11,19 @@ public class AdManager : MonoBehaviour
     void Start()
     {
 		Advertisement.Initialize(googlePlayID, testMode);
-		Debug.Log(Advertisement.isInitialized);
-		Debug.Log(Advertisement.IsReady());
+		//Debug.Log(Advertisement.isInitialized);
+		//Debug.Log(Advertisement.IsReady());
     }
 
 	public void DisplayAd()
 	{
 		if (!Advertisement.IsReady("video"))
 		{
-			Debug.Log("Ads ready for default placement");
+			//Debug.Log("Ads ready for default placement");
 			return;
 		}
 		Advertisement.Show("video");
-		Debug.Log(Advertisement.isShowing);
+		//Debug.Log(Advertisement.isShowing);
 	
 	}
 }

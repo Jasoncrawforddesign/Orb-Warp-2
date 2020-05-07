@@ -67,7 +67,7 @@ public class StoreManager : MonoBehaviour
 	void Start()
     {
 		//put into this function (need to check players saved game to see what level the upgrades are at, and what price is needed)
-		checkStoreInformation();
+		//checkStoreInformation();
 
 	}
 
@@ -77,45 +77,57 @@ public class StoreManager : MonoBehaviour
         
     }
 
-	void checkStoreInformation()
+	public void checkStoreInformation()
 	{
-		speedCurrentLevel = 0;
+		speedCurrentLevel = gm.speedLevel;
 		speedItemLevelText.text = speedCurrentLevel.ToString();
-		currentSpeedUpgradeCost = speedUpgradeCost01;
-		speedUpgradeCostText.text = currentSpeedUpgradeCost.ToString();
+		upgradeSpeed();
 
-		invincibilityCurrentLevel = 0;
+		invincibilityCurrentLevel = gm.invincibilityLevel;
 		invincibilityItemLevelText.text = invincibilityCurrentLevel.ToString();
-		currentInvincibilityUpgradeCost = invincibilityUpgradeCost01;
-		invincibilityUpgradeCostText.text = currentInvincibilityUpgradeCost.ToString();
+		upgradeInvicibility();
 
-		doubleCurrentLevel = 0;
+		doubleCurrentLevel = gm.doublePointsLevel;
 		doubleItemLevelText.text = doubleCurrentLevel.ToString();
-		currentDoubleUpgradeCost = doubleUpgradeCost01;
-		doubleUpgradeCostText.text = currentDoubleUpgradeCost.ToString();
+		upgradeDoublePoints();
 
-		laserCurrentLevel = 0;
+		laserCurrentLevel = gm.laserbeamLevel;
 		laserItemLevelText.text = laserCurrentLevel.ToString();
-		currentLaserUpgradeCost = laserUpgradeCost01;
-		laserUpgradeCostText.text = currentLaserUpgradeCost.ToString();
+		upgradeLaserBeam();
 
-		extraPaddleLevel = 0;
+		extraPaddleLevel = gm.extraPaddleLevel;
 		extraPaddleLevelText.text = extraPaddleLevel.ToString();
-		currentExtraPaddleUpgradeCost = extraPaddleUpgradeCost01;
-		extraPaddleUpgradeCostText.text = currentExtraPaddleUpgradeCost.ToString();
+		upgradeExtraPaddle();
 
 	}
 
-	public void upgradeSpeed()
+	public void purchaseSpeedUpgrade()
 	{
-		if((gm.playerCurrency > currentSpeedUpgradeCost)&&(speedCurrentLevel < 5))
+		if ((gm.playerCurrency >= currentSpeedUpgradeCost) && (speedCurrentLevel < 5))
 		{
 			gm.lessCurrency(currentSpeedUpgradeCost);
 			speedCurrentLevel += 1;
 			speedItemLevelText.text = speedCurrentLevel.ToString();
 			gm.rotationSpeedTimer += 1.2f;
+			upgradeSpeed();
+			SaveItemLevels();
+		}
+
+		else if ((gm.playerCurrency < currentSpeedUpgradeCost) && (speedCurrentLevel < 5))
+		{
+			//cannot buy upgrade, dialogue pop up.
+			Debug.Log("can't buy upgrade");
+		}
+	}
+	void upgradeSpeed()
+	{
+		
 			switch (speedCurrentLevel)
 			{
+				case 0:
+				currentSpeedUpgradeCost = speedUpgradeCost01;
+				speedUpgradeCostText.text = currentSpeedUpgradeCost.ToString();
+					break;
 
 				case 1:
 					currentSpeedUpgradeCost = speedUpgradeCost02;
@@ -141,27 +153,40 @@ public class StoreManager : MonoBehaviour
 					break;
 
 			}
-		}
-
-		else if((gm.playerCurrency < currentSpeedUpgradeCost)&&(speedCurrentLevel < 5))
-		{
-			//cannot buy upgrade, dialogue pop up.
-			Debug.Log("can't buy upgrade");
-		}
 
 		
 	}
 
-	public void upgradeInvicibility()
+
+
+	public void purchaseInvincibilityUpgrade()
 	{
-		if ((gm.playerCurrency > currentInvincibilityUpgradeCost) && (invincibilityCurrentLevel < 5))
+		if ((gm.playerCurrency >= currentInvincibilityUpgradeCost) && (invincibilityCurrentLevel < 5))
 		{
 			gm.lessCurrency(currentInvincibilityUpgradeCost);
 			invincibilityCurrentLevel += 1;
 			invincibilityItemLevelText.text = invincibilityCurrentLevel.ToString();
 			gm.shieldObjTimer += 1.2f;
+			upgradeInvicibility();
+			SaveItemLevels();
+		}
+
+		else if ((gm.playerCurrency < currentInvincibilityUpgradeCost) && (invincibilityCurrentLevel < 5))
+		{
+			//cannot buy upgrade, dialogue pop up.
+			Debug.Log("can't buy upgrade");
+		}
+
+	}
+	void upgradeInvicibility()
+	{
 			switch (invincibilityCurrentLevel)
 			{
+				case 0:
+				currentInvincibilityUpgradeCost = invincibilityUpgradeCost01;
+				invincibilityUpgradeCostText.text = currentInvincibilityUpgradeCost.ToString();
+					break;
+
 				case 1:
 					currentInvincibilityUpgradeCost = invincibilityUpgradeCost02;
 					invincibilityUpgradeCostText.text = currentInvincibilityUpgradeCost.ToString();
@@ -185,28 +210,38 @@ public class StoreManager : MonoBehaviour
 					invincibilityUpgradeCostText.text = "Complete";
 					break;
 			}
-		}
-
-		else if ((gm.playerCurrency < currentInvincibilityUpgradeCost) && (invincibilityCurrentLevel < 5))
-		{
-			//cannot buy upgrade, dialogue pop up.
-			Debug.Log("can't buy upgrade");
-		}
-
 
 	}
 
-	public void upgradeDoublePoints()
+
+	public void purchaseDoublePointsUpgrade()
 	{
-		if ((gm.playerCurrency > currentDoubleUpgradeCost) && (doubleCurrentLevel< 5))
+		if ((gm.playerCurrency >= currentDoubleUpgradeCost) && (doubleCurrentLevel < 5))
 		{
 			gm.lessCurrency(currentDoubleUpgradeCost);
 			doubleCurrentLevel += 1;
 			doubleItemLevelText.text = doubleCurrentLevel.ToString();
 			gm.doublePointsTimer += 1.2f;
+			upgradeDoublePoints();
+			SaveItemLevels();
+		}
+		else if ((gm.playerCurrency < currentDoubleUpgradeCost) && (doubleCurrentLevel < 5))
+		{
+			//cannot buy upgrade, dialogue pop up.
+			Debug.Log("can't buy upgrade");
+		}
+	}
+	void upgradeDoublePoints()
+	{
 			switch (doubleCurrentLevel)
-			{
-				case 1:
+		{
+
+			case 0:
+				currentDoubleUpgradeCost = doubleUpgradeCost01;
+				doubleUpgradeCostText.text = currentDoubleUpgradeCost.ToString();
+				break;
+
+			case 1:
 					currentDoubleUpgradeCost = doubleUpgradeCost02;
 					doubleUpgradeCostText.text = currentDoubleUpgradeCost.ToString();
 					break;
@@ -228,29 +263,39 @@ public class StoreManager : MonoBehaviour
 				case 5:
 					doubleUpgradeCostText.text = "Complete";
 					break;
-			}
 		}
-
-		else if ((gm.playerCurrency< currentDoubleUpgradeCost) && (doubleCurrentLevel < 5))
-		{
-			//cannot buy upgrade, dialogue pop up.
-			Debug.Log("can't buy upgrade");
-		}
-
 
 	}
 
-	public void upgradeLaserBeam()
+
+	public void purchaseLaserBeamUpgrade()
 	{
-		if ((gm.playerCurrency > currentLaserUpgradeCost) && (laserCurrentLevel< 5))
+		if ((gm.playerCurrency >= currentLaserUpgradeCost) && (laserCurrentLevel < 5))
 		{
 			gm.lessCurrency(currentLaserUpgradeCost);
 			laserCurrentLevel += 1;
 			laserItemLevelText.text = laserCurrentLevel.ToString();
 			gm.laserObjTimer += 1.2f;
-			switch (laserCurrentLevel)
+			upgradeLaserBeam();
+			SaveItemLevels();
+		}
+		else if ((gm.playerCurrency < currentLaserUpgradeCost) && (laserCurrentLevel < 5))
+		{
+			//cannot buy upgrade, dialogue pop up.
+			Debug.Log("can't buy upgrade");
+		}
+	}
+	void upgradeLaserBeam()
+	{
+
+		switch (laserCurrentLevel)
 			{
-				case 1:
+			case 0:
+				currentLaserUpgradeCost = laserUpgradeCost01;
+				laserUpgradeCostText.text = currentLaserUpgradeCost.ToString();
+				break;
+
+			case 1:
 					currentLaserUpgradeCost = laserUpgradeCost02;
 					laserUpgradeCostText.text = currentLaserUpgradeCost.ToString();
 					break;
@@ -273,27 +318,35 @@ public class StoreManager : MonoBehaviour
 					laserUpgradeCostText.text = "Complete";
 					break;
 			}
-		}
-
-		else if ((gm.playerCurrency<currentLaserUpgradeCost) && (laserCurrentLevel< 5))
-		{
-			//cannot buy upgrade, dialogue pop up.
-			Debug.Log("can't buy upgrade");
-		}
-
 
 	}
 
-	public void upgradeExtraPaddle()
+
+	public void purchaseExtraPaddleUpgrade()
 	{
-		if ((gm.playerCurrency > currentExtraPaddleUpgradeCost) && (extraPaddleLevel< 5))
+		if ((gm.playerCurrency >= currentExtraPaddleUpgradeCost) && (extraPaddleLevel < 5))
 		{
 			gm.lessCurrency(currentExtraPaddleUpgradeCost);
 			extraPaddleLevel += 1;
 			extraPaddleLevelText.text = extraPaddleLevel.ToString();
 			gm.extraPaddleTimer += 1.2f;
-			switch (extraPaddleLevel)
+			SaveItemLevels();
+		}
+		else if ((gm.playerCurrency < currentExtraPaddleUpgradeCost) && (extraPaddleLevel < 5))
+		{
+			//cannot buy upgrade, dialogue pop up.
+			Debug.Log("can't buy upgrade");
+		}
+	}
+	public void upgradeExtraPaddle()
+	{
+
+		switch (extraPaddleLevel)
 			{
+				case 0:
+					currentExtraPaddleUpgradeCost = extraPaddleUpgradeCost01;
+					extraPaddleUpgradeCostText.text = currentExtraPaddleUpgradeCost.ToString();
+					break;
 				case 1:
 					currentExtraPaddleUpgradeCost = extraPaddleUpgradeCost02;
 					extraPaddleUpgradeCostText.text = currentExtraPaddleUpgradeCost.ToString();
@@ -317,15 +370,21 @@ public class StoreManager : MonoBehaviour
 					extraPaddleUpgradeCostText.text = "Complete";
 					break;
 			}
-		}
 
-		else if ((gm.playerCurrency< currentExtraPaddleUpgradeCost) && (extraPaddleLevel < 5))
-		{
-			//cannot buy upgrade, dialogue pop up.
-			Debug.Log("can't buy upgrade");
-		}
-		
 
 	}
 
+
+
+
+	public void SaveItemLevels()
+	{
+		gm.speedLevel = speedCurrentLevel;
+		gm.invincibilityLevel = invincibilityCurrentLevel;
+		gm.doublePointsLevel = doubleCurrentLevel;
+		gm.laserbeamLevel = laserCurrentLevel;
+		gm.extraPaddleLevel = extraPaddleLevel;
+
+		gm.SaveGame();
+	}
 }

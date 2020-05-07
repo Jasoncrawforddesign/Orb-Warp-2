@@ -31,37 +31,36 @@ public class LaserBeamScript : MonoBehaviour
 			Destroy(asteroidBoom.gameObject, 2);
 			collision.gameObject.GetComponent<Basic_Asteroid_Function>().hitByLaser();
 		}
-	}
 
-	void laserBeamRayCast01()
-	{
-		RaycastHit2D hit = Physics2D.Raycast(playerPaddle.transform.position, playerPaddle.transform.up * 5, rayCastLayers);
-		Debug.DrawRay(playerPaddle.transform.position, playerPaddle.transform.up * 5, Color.green);
+	//void laserBeamRayCast01()
+	//{
+	//	RaycastHit2D hit = Physics2D.Raycast(playerPaddle.transform.position, playerPaddle.transform.up * 5, rayCastLayers);
+	//	Debug.DrawRay(playerPaddle.transform.position, playerPaddle.transform.up * 5, Color.green);
 
-		if (hit.collider.gameObject.tag == "Asteroid")
-		{
-			ParticleSystem asteroidBoom = Instantiate(asteroidParticlePrefab, hit.transform.position, hit.transform.rotation) as ParticleSystem;
-			asteroidBoom.name = "particle";
-			asteroidBoom.Play();
-			Destroy(asteroidBoom.gameObject, 2);
-			hit.collider.gameObject.GetComponent<Basic_Asteroid_Function>().hitByLaser();
-		}
-		else return;
-	}
+	//	if (hit.collider.gameObject.tag == "Asteroid")
+	//	{
+	//		ParticleSystem asteroidBoom = Instantiate(asteroidParticlePrefab, hit.transform.position, hit.transform.rotation) as ParticleSystem;
+	//		asteroidBoom.name = "particle";
+	//		asteroidBoom.Play();
+	//		Destroy(asteroidBoom.gameObject, 2);
+	//		hit.collider.gameObject.GetComponent<Basic_Asteroid_Function>().hitByLaser();
+	//	}
+	//	else return;
+	//}
 
-	void laserBeamRayCast02()
-	{
-		RaycastHit2D hit = Physics2D.Raycast((playerPaddle.transform.position + new Vector3(2,0,0)), playerPaddle.transform.up * 5, rayCastLayers);
-		Debug.DrawRay(playerPaddle.transform.position, playerPaddle.transform.up * 5, Color.green);
+	//void laserBeamRayCast02()
+	//{
+	//	RaycastHit2D hit = Physics2D.Raycast((playerPaddle.transform.position + new Vector3(2,0,0)), playerPaddle.transform.up * 5, rayCastLayers);
+	//	Debug.DrawRay(playerPaddle.transform.position, playerPaddle.transform.up * 5, Color.green);
 
-		if (hit.collider.gameObject.tag == "Asteroid")
-		{
-			ParticleSystem asteroidBoom = Instantiate(asteroidParticlePrefab, hit.transform.position, hit.transform.rotation) as ParticleSystem;
-			asteroidBoom.name = "particle";
-			asteroidBoom.Play();
-			Destroy(asteroidBoom.gameObject, 2);
-			hit.collider.gameObject.GetComponent<Basic_Asteroid_Function>().hitByLaser();
-		}
-		else return;
+	//	if (hit.collider.gameObject.tag == "Asteroid")
+	//	{
+	//		ParticleSystem asteroidBoom = Instantiate(asteroidParticlePrefab, hit.transform.position, hit.transform.rotation) as ParticleSystem;
+	//		asteroidBoom.name = "particle";
+	//		asteroidBoom.Play();
+	//		Destroy(asteroidBoom.gameObject, 2);
+	//		hit.collider.gameObject.GetComponent<Basic_Asteroid_Function>().hitByLaser();
+	//	}
+	//	else return;
 	}
 }

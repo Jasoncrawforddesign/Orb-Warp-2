@@ -9,6 +9,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
+	public AdManager adManager;
+
 	public ParticleSystem asteroidParticlePrefab;
 
 	public GameObject spawnManager;
@@ -493,6 +495,7 @@ public class GameManager : MonoBehaviour
 		switch (newShield)
 		{
 			case -1:
+				adManager.DisplayAd();
 				MainMenu();
 				break;
 

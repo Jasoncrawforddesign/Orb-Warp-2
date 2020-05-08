@@ -25,7 +25,7 @@ public class EndGame_Popup : MonoBehaviour
 	{
 		playerScore = gm.currentScore;
 		asteroidsDestroyed = gm.asteroidCounter;
-		currencyEarned = asteroidsDestroyed;
+		currencyEarned = asteroidsDestroyed + playerScore;
 
 		currentHighScore = gm.highScore;
 	}

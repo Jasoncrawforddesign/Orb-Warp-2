@@ -385,7 +385,7 @@ public class SpawnManager: MonoBehaviour
 	public void startSpawner()
 	{
 		adjustVariables();
-		initialSpawn();
+		//initialSpawn();
 		StartCoroutine(SpawnTimer());
 
 	}

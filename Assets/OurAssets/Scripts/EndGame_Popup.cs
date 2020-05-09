@@ -20,14 +20,21 @@ public class EndGame_Popup : MonoBehaviour
 
 	public TextMeshProUGUI newHighScoreText;
 
+	private int rewardCurrency;
+	private bool wasVidWatched = false;
+	public GameObject vidButton;
+	public TextMeshProUGUI videoInsentiveText;
 
 	public void updateVariables()
 	{
+		vidButton.SetActive(true);
 		playerScore = gm.currentScore;
 		asteroidsDestroyed = gm.asteroidCounter;
 		currencyEarned = asteroidsDestroyed + playerScore;
 
 		currentHighScore = gm.highScore;
+
+		rewardCurrency = currencyEarned;
 	}
 
 	public void updateText()
@@ -36,7 +43,7 @@ public class EndGame_Popup : MonoBehaviour
 
 		asteroidsDestroyedText.text = "Asteroids Destroyed = " + asteroidsDestroyed.ToString();
 
-		currencyEarnedText.text = "Credit earned = " + currencyEarned.ToString();
+		currencyEarnedText.text = "Credit earned = $" + currencyEarned.ToString();
 
 		if(playerScore > currentHighScore)
 		{
@@ -47,6 +54,8 @@ public class EndGame_Popup : MonoBehaviour
 		{
 			newHighScoreText.text = "Highscore " + currentHighScore.ToString();
 		}
+
+		videoInsentiveText.text = "Watch the sponsored video below for an extra $" + rewardCurrency; 
 		
 	}
 
@@ -54,7 +63,23 @@ public class EndGame_Popup : MonoBehaviour
 	//Called after ad/exiting popup/restart game.
 	public void addCurrency()
 	{
+		if(wasVidWatched == true)
+		{
+			gm.addCurrency(currencyEarned + rewardCurrency);
+			wasVidWatched = false;
+		}
+		else
 		gm.addCurrency(currencyEarned);
+
+		rewardCurrency = 0;
+	}
+
+
+	public void videoReward()
+	{
+		wasVidWatched = true;
+		videoInsentiveText.text = "$"+ rewardCurrency + " is now yours!";
+		vidButton.SetActive(false);
 	}
 
 }

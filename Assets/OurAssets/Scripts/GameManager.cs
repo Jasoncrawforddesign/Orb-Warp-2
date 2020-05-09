@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 	public AdManager adManager;
 	public StoreManager storeManager;
 	public GameObject endGamePopupObject;
+	public TweenManager tweenManager;
 
 	public ParticleSystem asteroidParticlePrefab;
 
@@ -177,6 +178,7 @@ public class GameManager : MonoBehaviour
 		test_ring.GetComponent<DOTweenAnimation>().DOPlay();
 		test_ring.GetComponent<DOTweenAnimation>().DORestart();
 
+
 		cameraMain.GetComponent<DOTweenAnimation>().DOPlay();
 		cameraMain.GetComponent<DOTweenAnimation>().DORestart();
 
@@ -186,14 +188,18 @@ public class GameManager : MonoBehaviour
 	#region Use this function to load the Main Menu/stop the run.
 	public void MainMenu()
 	{
+		tweenManager.playEndResultPanel(false);
+		tweenManager.playGameComponentAnim(false);
+		MainMenu_Panel.gameObject.GetComponent<DOTweenAnimation>().DORestart();
+		MainMenu_Panel.gameObject.GetComponent<DOTweenAnimation>().DOPlay();
 		//Turns on the Main menu, checks currect score against highscore, updating highscore when needed.
-		MainMenu_Panel.SetActive(true);
+		//MainMenu_Panel.SetActive(true);
 	}
 
 	void endRun()
 	{
-		destroyAsteroids();
-
+		tweenManager.playEndResultPanel(true);
+		test_ring.GetComponent<DOTweenAnimation>().DORewind();
 		if (currentScore > highScore)
 		{
 			highScore = currentScore;
@@ -214,7 +220,6 @@ public class GameManager : MonoBehaviour
 		secondPaddle.SetActive(false);
 		playerControl.GetComponent<PlayerController>().playerSpeed = currentSpeed;
 		gui_Panel.SetActive(false);
-		endGamePopupObject.SetActive(false);
 	}
 
 	#endregion
@@ -222,13 +227,15 @@ public class GameManager : MonoBehaviour
 	#region Use this function to start a run
 	public void playGame()
 	{
+		tweenManager.playEndResultPanel(false);
+		MainMenu_Panel.gameObject.GetComponent<DOTweenAnimation>().DOPlayBackwards();
+		tweenManager.playGameComponentAnim(true);
 		currentScore = 0;
 		scoreText.text = currentScore.ToString();
 		scoreMultiplierText.text = null;
 		asteroidCounter = 0;
 
-		endGamePopupObject.SetActive(false);
-		MainMenu_Panel.SetActive(false);
+		//MainMenu_Panel.SetActive(false);
 		playerControl.GetComponent<PlayerController>().resetPlayer();
 		gui_Panel.SetActive(true);
 		checkShieldMax();
@@ -512,9 +519,9 @@ public class GameManager : MonoBehaviour
 		switch (newShield)
 		{
 			case -1:
+				destroyAsteroids();
 				endRun();
 				SaveGame();
-				endGamePopupObject.SetActive(true);
 				endGamePopupObject.GetComponent<EndGame_Popup>().updateVariables();
 				endGamePopupObject.GetComponent<EndGame_Popup>().updateText();
 				//adManager.DisplayAd();

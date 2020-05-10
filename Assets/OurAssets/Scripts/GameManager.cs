@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 	public StoreManager storeManager;
 	public GameObject endGamePopupObject;
 	public TweenManager tweenManager;
+	public AudioManager audioManager;
 
 	public ParticleSystem asteroidParticlePrefab;
 
@@ -123,6 +124,7 @@ public class GameManager : MonoBehaviour
 		pickupText = currentPickupText.GetComponent<Text>();
 		pickUpAnim = currentPickupText.GetComponent<Animator>();
 		pickUpAnimLength = textFadeClip.length;
+		
 
 		currentSpeed = playerControl.GetComponent<PlayerController>().playerSpeed;
 
@@ -188,6 +190,7 @@ public class GameManager : MonoBehaviour
 	#region Use this function to load the Main Menu/stop the run.
 	public void MainMenu()
 	{
+
 		tweenManager.playEndResultPanel(false);
 		tweenManager.playGameComponentAnim(false);
 		MainMenu_Panel.gameObject.GetComponent<DOTweenAnimation>().DORestart();
@@ -200,6 +203,7 @@ public class GameManager : MonoBehaviour
 	{
 		tweenManager.playEndResultPanel(true);
 		test_ring.GetComponent<DOTweenAnimation>().DORewind();
+
 		if (currentScore > highScore)
 		{
 			highScore = currentScore;
@@ -227,6 +231,7 @@ public class GameManager : MonoBehaviour
 	#region Use this function to start a run
 	public void playGame()
 	{
+
 		tweenManager.playEndResultPanel(false);
 		MainMenu_Panel.gameObject.GetComponent<DOTweenAnimation>().DOPlayBackwards();
 		tweenManager.playGameComponentAnim(true);
@@ -615,6 +620,8 @@ public class GameManager : MonoBehaviour
 	{
 		asteroidCounter += 1;
 		tempAsteroidCounter += 1;
+
+		audioManager.playSound("AsteroidDestroyed");
 
 		if(tempAsteroidCounter >= asteroidsNeededToMultiply)
 		{

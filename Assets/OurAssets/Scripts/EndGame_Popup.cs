@@ -39,13 +39,19 @@ public class EndGame_Popup : MonoBehaviour
 
 	public void updateText()
 	{
-		playerScoreText.text = "Score = " + playerScore.ToString();
+		playerScoreText.text = playerScore.ToString();
 
-		asteroidsDestroyedText.text = "Asteroids Destroyed = " + asteroidsDestroyed.ToString();
+		asteroidsDestroyedText.text = asteroidsDestroyed.ToString();
 
-		currencyEarnedText.text = "Credit earned = $" + currencyEarned.ToString();
+		currencyEarnedText.text = currencyEarned.ToString();
 
-		if(playerScore > currentHighScore)
+		//playerScoreText.text = "Score = " + playerScore.ToString();
+
+		//asteroidsDestroyedText.text = "Asteroids Destroyed = " + asteroidsDestroyed.ToString();
+
+		//currencyEarnedText.text = "Credit earned = $" + currencyEarned.ToString();
+
+		if (playerScore > currentHighScore)
 		{
 			newHighScoreText.text = "New HighScore " + playerScore.ToString();
 		}

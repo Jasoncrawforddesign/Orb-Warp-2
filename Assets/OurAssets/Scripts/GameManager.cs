@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Animations;
 using UnityEngine.SceneManagement;
+using TMPro;
 using DG.Tweening;
 using UnityEngine;
 
@@ -20,11 +21,11 @@ public class GameManager : MonoBehaviour
 	public GameObject spawnManager;
 	public GameObject playerControl;
 
-	public Text scoreText;
+	public TextMeshProUGUI scoreText;
 	public int currentScore;
 
 	public int highScore;
-	public Text highScoreText;
+	public TextMeshProUGUI highScoreText;
 
 	public GameObject gui_Panel;
 	public GameObject MainMenu_Panel;
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour
 	public GameObject Shop_Panel;
 
 	public int playerCurrency;
-	public Text currencyText;
+	public TextMeshProUGUI currencyText;
 
 	[Header("Pickup Variables Below")]
 	public GameObject currentPickupText;
@@ -98,7 +99,7 @@ public class GameManager : MonoBehaviour
 	private int tempAsteroidCounter;
 	public int asteroidsNeededToMultiply;
 
-	public Text scoreMultiplierText;
+	public TextMeshProUGUI scoreMultiplierText;
 	public int scoreMultiplier = 1;
 
 	public GameObject test_ring;
@@ -212,6 +213,7 @@ public class GameManager : MonoBehaviour
 
 		}else
 		{
+
 			highScoreText.text = "High Score: " + highScore.ToString();
 		}
 		currentSpeed = playerControl.GetComponent<PlayerController>().playerSpeed;

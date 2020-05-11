@@ -13,8 +13,5 @@ MonoBehaviour:
   m_Name: Laser Beam
   m_EditorClassIdentifier: 
   powerUpName: Laser Beam
-  description: This powerup provides a Laser beam, everything is touches gets destroyed.Upgrading
-    will increase the powerups time limit.
+  description: Upgrading will increase the power ups duration.
   artwork: {fileID: 21300000, guid: 3acb12d726afe8a4ea8b88b8f6607ec1, type: 3}
-  upgradeCost: 1000
-  currentLevel: 1

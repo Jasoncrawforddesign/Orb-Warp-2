@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: Invincibility
   m_EditorClassIdentifier: 
   powerUpName: Invincibility
-  description: The Invincibility powerup creates a bubble of elemental energy, protecting
-    the planet from all asteroids. Upgrading will increase the powerups time limit.
+  description: Upgrading will increase the power ups duration.
   artwork: {fileID: 21300000, guid: 1eb8d9c950a10614ebd9647d29e8f9bb, type: 3}

@@ -13,8 +13,5 @@ MonoBehaviour:
   m_Name: ExtraPaddle
   m_EditorClassIdentifier: 
   powerUpName: Extra Paddle
-  description: This powerup provides an extra paddle on the opposite side of the original
-    paddle. Upgrading will increase the powerups time limit.
+  description: Upgrading will increase the power ups duration.
   artwork: {fileID: 21300000, guid: 9b69cdced5ce93242b0b44734af72889, type: 3}
-  upgradeCost: 1000
-  currentLevel: 1

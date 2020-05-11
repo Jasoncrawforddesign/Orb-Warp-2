@@ -27,8 +27,8 @@ public class CrossFadeMixers : MonoBehaviour
 		{
 			currentTime += Time.deltaTime;
 
-			mixer.SetFloat("volMenuMusic", Mathf.Log10(Mathf.Lerp(1, 0.0001f, currentTime / fadeTime)) * 20);
-			mixer.SetFloat("vol2", Mathf.Log10(Mathf.Lerp(0.0001f, 1, currentTime / fadeTime)) * 20);
+			mixer.SetFloat("volMenuMusic", Mathf.Log10(Mathf.Lerp(.6f, 0.0001f, currentTime / fadeTime)) * 20);
+			mixer.SetFloat("vol2", Mathf.Log10(Mathf.Lerp(0.0001f, .6f, currentTime / fadeTime)) * 20);
 
 			yield return null;
 		}

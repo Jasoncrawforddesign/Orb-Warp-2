@@ -531,6 +531,9 @@ public class GameManager : MonoBehaviour
 				SaveGame();
 				endGamePopupObject.GetComponent<EndGame_Popup>().updateVariables();
 				endGamePopupObject.GetComponent<EndGame_Popup>().updateText();
+				scoreMultiplier = 1;
+				scoreMultiplierText.text = null;
+				tempAsteroidCounter = 0;
 				//adManager.DisplayAd();
 				//MainMenu();
 				break;
@@ -568,9 +571,18 @@ public class GameManager : MonoBehaviour
 		}
 		currentShieldAmount = newShield;
 
-		scoreMultiplier = 1;
-		scoreMultiplierText.text = null;
-		tempAsteroidCounter = 0;
+		if(scoreMultiplier > 5){
+			scoreMultiplier -= 5;
+			scoreMultiplierText.text = "x " + scoreMultiplier.ToString();
+		}
+		else if (scoreMultiplier <= 5)
+		{
+			scoreMultiplier = 1;
+			scoreMultiplierText.text = "x " + scoreMultiplier.ToString();
+		}
+
+		audioManager.playSound("PlanetHit");
+
 	}
 
 

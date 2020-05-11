@@ -12,9 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e4a8a21b008e840b67eac1f134c059, type: 3}
   m_Name: DoublePoints
   m_EditorClassIdentifier: 
-  powerUpName: Points Multiplier
-  description: This powerup provides a multiplier to a pre-existing multiplier for
-    a certain amount of time. Upgrading will increase the powerups time limit.
+  powerUpName: Double Points
+  description: Upgrading will increase the power ups duration.
   artwork: {fileID: 21300000, guid: 7fca1aec01449fe44ac813ffd19313ed, type: 3}
-  upgradeCost: 1000
-  currentLevel: 1

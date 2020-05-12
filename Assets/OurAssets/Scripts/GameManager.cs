@@ -111,6 +111,8 @@ public class GameManager : MonoBehaviour
 	public int extraPaddleLevel;
 	public int laserbeamLevel;
 
+	private bool isPickupActive;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -185,7 +187,10 @@ public class GameManager : MonoBehaviour
 		cameraMain.GetComponent<DOTweenAnimation>().DOPlay();
 		cameraMain.GetComponent<DOTweenAnimation>().DORestart();
 
-		pickUpAllowed();
+		if(isPickupActive == false)
+		{
+			pickUpAllowed();
+		}
 
 	}
 	#region Use this function to load the Main Menu/stop the run.
@@ -233,7 +238,7 @@ public class GameManager : MonoBehaviour
 	#region Use this function to start a run
 	public void playGame()
 	{
-
+		playerControl.GetComponent<PlayerController>().playerSpeed = 40;
 		tweenManager.playEndResultPanel(false);
 		MainMenu_Panel.gameObject.GetComponent<DOTweenAnimation>().DOPlayBackwards();
 		tweenManager.playGameComponentAnim(true);
@@ -322,9 +327,11 @@ public class GameManager : MonoBehaviour
 	//Contains rotation speed pickup timer, also activates and deactivates the extra speed;
 	IEnumerator rotationPickup()
 	{
+		isPickupActive = true;
 		pickupText.text = "Increase Speed";
 		currentPickupText.SetActive(true);
-		playerControl.GetComponent<PlayerController>().playerSpeed += 5;
+		//currentSpeed = playerControl.GetComponent<PlayerController>().playerSpeed;
+		playerControl.GetComponent<PlayerController>().playerSpeedis(5);
 		//Debug.Log("rotate Active");
 		yield return new WaitForSeconds(rotationSpeedTimer - pickUpAnimLength);
 
@@ -335,14 +342,16 @@ public class GameManager : MonoBehaviour
 		pickUpTextViewable();
 
 		//Debug.Log("rotate deactive");
-		playerControl.GetComponent<PlayerController>().playerSpeed = currentSpeed;
+		playerControl.GetComponent<PlayerController>().playerSpeedis(-5);
 		pickupText.text = null;
 		pickUpSpawnCooldown();
+		isPickupActive = false;
 	}
 
 	//Contains extraPaddle pickup timer, also activates and deactivates the extra paddle gameobject.
 	IEnumerator extraPaddlePickup()
 	{
+		isPickupActive = true;
 		pickupText.text = "Extra Paddle";
 		currentPickupText.SetActive(true);
 		secondPaddle.SetActive(true);
@@ -359,11 +368,13 @@ public class GameManager : MonoBehaviour
 		secondPaddle.SetActive(false);
 		pickupText.text = null;
 		pickUpSpawnCooldown();
+		isPickupActive = false;
 	}
 
 	//Contains invincibility pickup timer, also activates and deactivates the invincibility gameobject.
 	IEnumerator oneUseShieldPickup()
 	{
+		isPickupActive = true;
 		pickupText.text = "invincibility";
 		currentPickupText.SetActive(true);
 		shieldObject.SetActive(true);
@@ -380,11 +391,13 @@ public class GameManager : MonoBehaviour
 		shieldObject.SetActive(false);
 		pickupText.text = null;
 		pickUpSpawnCooldown();
+		isPickupActive = false;
 	}
 
 	//Contains double points pickup timer, also enables and disables the doublepoints bool.
 	IEnumerator doublePointsPickup()
 	{
+		isPickupActive = true;
 		pickupText.text = "Double Points";
 		currentPickupText.SetActive(true);
 		isDoublePointsActive = true;
@@ -401,12 +414,14 @@ public class GameManager : MonoBehaviour
 		isDoublePointsActive = false;
 		pickupText.text = null;
 		pickUpSpawnCooldown();
+		isPickupActive = false;
 	}
 
 
 	//Contains laser beam pickup timer, also activates and deactivates the laserbeam gameobject.
 	IEnumerator laserBeamPickup()
 	{
+		isPickupActive = true;
 		pickupText.text = "Laser Beam";
 		currentPickupText.SetActive(true);
 		laserObject.SetActive(true);
@@ -423,6 +438,7 @@ public class GameManager : MonoBehaviour
 		laserObject.SetActive(false);
 		pickupText.text = null;
 		pickUpSpawnCooldown();
+		isPickupActive = false;
 	}
 #endregion 
 

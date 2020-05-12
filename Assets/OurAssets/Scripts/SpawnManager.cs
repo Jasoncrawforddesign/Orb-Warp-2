@@ -127,9 +127,6 @@ public class SpawnManager: MonoBehaviour
 				repeatSpawning = 1f;
 				spawnPointAvailable = 2;
 
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
-
 				adjustedVariableInfo();
 				break;
 
@@ -137,9 +134,6 @@ public class SpawnManager: MonoBehaviour
 				asteroidSpeed = 4;
 				repeatSpawning = .9f;
 				spawnPointAvailable = 3;
-
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
 				adjustedVariableInfo();
 				break;
@@ -149,8 +143,6 @@ public class SpawnManager: MonoBehaviour
 				repeatSpawning = .8f;
 				spawnPointAvailable = 4;
 
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
 				adjustedVariableInfo();
 				break;
@@ -160,18 +152,12 @@ public class SpawnManager: MonoBehaviour
 				repeatSpawning = .7f;
 				spawnPointAvailable = 5;
 
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
-
 				adjustedVariableInfo();
 				break;
 
 			case 20:
 				asteroidSpeed = 4;
 				repeatSpawning = .6f;
-
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
 				adjustedVariableInfo();
 				break;
@@ -180,8 +166,6 @@ public class SpawnManager: MonoBehaviour
 				asteroidSpeed = 4;
 				repeatSpawning = .9f;
 
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
 				adjustedVariableInfo();
 				break;
@@ -190,9 +174,6 @@ public class SpawnManager: MonoBehaviour
 				asteroidSpeed = 5;
 				repeatSpawning = 1.2f;
 
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
-
 				adjustedVariableInfo();
 				break;
 
@@ -200,8 +181,6 @@ public class SpawnManager: MonoBehaviour
 				asteroidSpeed = 5;
 				repeatSpawning = 1.1f;
 
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
 				adjustedVariableInfo();
 				break;
@@ -210,18 +189,12 @@ public class SpawnManager: MonoBehaviour
 				asteroidSpeed = 5;
 				repeatSpawning = 1f;
 
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
-
 				adjustedVariableInfo();
 				break;
 
 			case 45:
 				asteroidSpeed = 5;
 				repeatSpawning = .9f;
-
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
 				adjustedVariableInfo();
 				break;
@@ -230,18 +203,12 @@ public class SpawnManager: MonoBehaviour
 				asteroidSpeed = 5.2f;
 				repeatSpawning = .7f;
 
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
-
 				adjustedVariableInfo();
 				break;
 
 			case 55:
 				asteroidSpeed = 5.4f;
 				repeatSpawning = .8f;
-
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
 				adjustedVariableInfo();
 				break;
@@ -250,9 +217,6 @@ public class SpawnManager: MonoBehaviour
 				asteroidSpeed = 5.6f;
 				repeatSpawning = .9f;
 
-				newPlayerSpeed = 40;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
-
 				adjustedVariableInfo();
 				break;
 
@@ -260,8 +224,8 @@ public class SpawnManager: MonoBehaviour
 				asteroidSpeed = 6;
 				repeatSpawning = 1;
 
-				newPlayerSpeed = 45;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+				//this will plus 5 to the speed
+				gm.GetComponent<GameManager>().newPlayerSpeed(5);
 
 				adjustedVariableInfo();
 				break;
@@ -270,18 +234,12 @@ public class SpawnManager: MonoBehaviour
 				asteroidSpeed = 6;
 				repeatSpawning = .9f;
 
-				newPlayerSpeed = 45;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
-
 				adjustedVariableInfo();
 				break;
 
 			case 75:
 				asteroidSpeed = 6;
 				repeatSpawning = .8f;
-
-				newPlayerSpeed = 45;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
 				adjustedVariableInfo();
 				break;
@@ -290,8 +248,7 @@ public class SpawnManager: MonoBehaviour
 				asteroidSpeed = 6;
 				repeatSpawning = .7f;
 
-				newPlayerSpeed = 50;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
+				gm.GetComponent<GameManager>().newPlayerSpeed(5);
 
 				adjustedVariableInfo();
 				break;
@@ -300,28 +257,19 @@ public class SpawnManager: MonoBehaviour
 				asteroidSpeed = 6;
 				repeatSpawning = .6f;
 
-				newPlayerSpeed = 50;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
 				adjustedVariableInfo();
 				break;
 
 			case 115:
 				asteroidSpeed = 6f;
-				repeatSpawning = 0.5f;
-
-				newPlayerSpeed = 50;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
 				adjustedVariableInfo();
 				break;
 
-			case 125:
+			case 150:
 				asteroidSpeed = 6f;
 				repeatSpawning = 0.4f;
-
-				newPlayerSpeed = 50;
-				gm.GetComponent<GameManager>().newPlayerSpeed(newPlayerSpeed);
 
 				adjustedVariableInfo();
 				break;

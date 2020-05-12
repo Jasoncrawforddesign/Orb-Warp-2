@@ -82,7 +82,9 @@ public class PlayerController : MonoBehaviour
 	//This function is used to update the player paddles rotation speed.
 	public void playerSpeedis(float newSpeed)
 	{
-		playerSpeed = newSpeed;
+
+		playerSpeed += newSpeed;
+
 	}
 
 }

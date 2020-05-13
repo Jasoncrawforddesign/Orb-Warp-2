@@ -330,6 +330,7 @@ public class StoreManager : MonoBehaviour
 			extraPaddleLevel += 1;
 			extraPaddleLevelText.text = extraPaddleLevel.ToString();
 			gm.extraPaddleTimer += 1.2f;
+			upgradeExtraPaddle();
 			SaveItemLevels();
 		}
 		else if ((gm.playerCurrency < currentExtraPaddleUpgradeCost) && (extraPaddleLevel < 5))

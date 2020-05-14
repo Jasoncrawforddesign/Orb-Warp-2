@@ -63,6 +63,12 @@ public class StoreManager : MonoBehaviour
 	public int extraPaddleUpgradeCost05;
 	private int currentExtraPaddleUpgradeCost;
 
+	private bool wasVidWatched;
+	public TextMeshProUGUI videoInsentiveText;
+	public GameObject vidButton;
+	public GameObject adVidFrame;
+	private int rewardAmount;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -70,12 +76,6 @@ public class StoreManager : MonoBehaviour
 		//checkStoreInformation();
 
 	}
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
 	public void checkStoreInformation()
 	{
@@ -387,5 +387,61 @@ public class StoreManager : MonoBehaviour
 		gm.extraPaddleLevel = extraPaddleLevel;
 
 		gm.SaveGame();
+	}
+
+
+	public void rewardedVideo()
+	{
+		wasVidWatched = true;
+		addCurrency();
+		videoInsentiveText.text = "$" + rewardAmount + " is now yours!";
+		vidButton.SetActive(false);
+	}
+
+	public void addCurrency()
+	{
+		if (wasVidWatched == true)
+		{
+			gm.addCurrency(rewardAmount);
+			wasVidWatched = false;
+		}
+	}
+
+	public void updateAdText()
+	{
+		if(gm.playerCurrency < 2000)
+		{
+			int tempInt = Mathf.RoundToInt(gm.playerCurrency / 4);
+			rewardAmount = Mathf.RoundToInt(tempInt * 1.5f);
+		}
+
+		else if (gm.playerCurrency > 2000 && gm.playerCurrency < 4000)
+		{
+			int tempInt = Mathf.RoundToInt(gm.playerCurrency / 6);
+			rewardAmount = Mathf.RoundToInt(tempInt * 1.25f);
+		}
+
+		else if (gm.playerCurrency > 4000)
+		{
+			int tempInt = Mathf.RoundToInt(gm.playerCurrency / 8);
+			rewardAmount = Mathf.RoundToInt(tempInt);
+		}
+
+		videoInsentiveText.text = "Watch the sponsored video below for an extra $" + rewardAmount;
+	
+	}
+
+	public void turnOnAd()
+	{
+		adVidFrame.SetActive(true);
+		vidButton.SetActive(true);
+	}
+
+	public void turnOffAd()
+	{
+		if(wasVidWatched == false)
+		{
+			adVidFrame.SetActive(false);
+		}
 	}
 }

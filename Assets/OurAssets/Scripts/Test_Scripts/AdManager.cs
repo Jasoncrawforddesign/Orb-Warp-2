@@ -7,6 +7,8 @@ public class AdManager : MonoBehaviour
 {
 	string googlePlayID = "3591480";
 	bool testMode = true;
+
+	private int runsCompleted;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,4 +28,17 @@ public class AdManager : MonoBehaviour
 		//Debug.Log(Advertisement.isShowing);
 	
 	}
+
+	//public void addRunComplete()
+	//{
+	//	runsCompleted += 1;
+	//}
+
+	//public void ForcedAd()
+	//{
+	//	if(runsCompleted = 5)
+	//	{
+
+	//	}
+	//}
 }

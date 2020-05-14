@@ -113,9 +113,12 @@ public class GameManager : MonoBehaviour
 
 	private bool isPickupActive;
 
+	private int currentRunsCompleted;
+
 	// Start is called before the first frame update
 	void Start()
     {
+		currentRunsCompleted = 0;
 		//check see if there is a save.
 		// it will then LoadPlayer data if a save already exists.
 		SaveSystem.InitialSave(this);
@@ -231,6 +234,8 @@ public class GameManager : MonoBehaviour
 		secondPaddle.SetActive(false);
 		playerControl.GetComponent<PlayerController>().playerSpeed = currentSpeed;
 		gui_Panel.SetActive(false);
+		storeManager.turnOnAd();
+		forcedAd();
 	}
 
 	#endregion
@@ -721,4 +726,16 @@ public class GameManager : MonoBehaviour
 		storeManager.checkStoreInformation();
 		SaveSystem.SaveGameManager(this);
 	}
+
+	public void forcedAd()
+	{
+		if (currentRunsCompleted == 5)
+		{
+			adManager.DisplayAd();
+			currentRunsCompleted = 0;
+		}
+		else
+			currentRunsCompleted += 1;
+	}
+
 }

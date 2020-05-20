@@ -23,10 +23,21 @@ public class AdManager : MonoBehaviour
 		{
 			//Debug.Log("Ads ready for default placement");
 			return;
+		} else if (Advertisement.IsReady("video"))
+		{
+			Advertisement.Show("video");
 		}
-		Advertisement.Show("video");
 		//Debug.Log(Advertisement.isShowing);
 	
+	}
+
+	private void OnApplicationFocus(bool focus)
+	{
+		if(focus == true)
+		{
+			Advertisement.Initialize(googlePlayID, testMode);
+			Debug.Log("focus test");
+		}
 	}
 
 	//public void addRunComplete()

@@ -24,6 +24,7 @@ public class EndGame_Popup : MonoBehaviour
 	private bool wasVidWatched = false;
 	public GameObject vidButton;
 	public TextMeshProUGUI videoInsentiveText;
+	public TextMeshProUGUI endCurrentCurrency;
 
 	public void updateVariables()
 	{
@@ -43,8 +44,10 @@ public class EndGame_Popup : MonoBehaviour
 
 		asteroidsDestroyedText.text = asteroidsDestroyed.ToString();
 
-		currencyEarnedText.text = currencyEarned.ToString();
+		currencyEarnedText.text = "<sprite index= 0> " + currencyEarned.ToString();
+		endCurrentCurrency.text = "<sprite index= 0> " + (gm.playerCurrency + currencyEarned).ToString();
 
+		gm.addCurrency(currencyEarned);
 		//playerScoreText.text = "Score = " + playerScore.ToString();
 
 		//asteroidsDestroyedText.text = "Asteroids Destroyed = " + asteroidsDestroyed.ToString();
@@ -69,15 +72,9 @@ public class EndGame_Popup : MonoBehaviour
 	//Called after ad/exiting popup/restart game.
 	public void addCurrency()
 	{
-		if(wasVidWatched == true)
-		{
-			gm.addCurrency(currencyEarned + rewardCurrency);
-			wasVidWatched = false;
-		}
-		else
+
 		gm.addCurrency(currencyEarned);
 
-		rewardCurrency = 0;
 	}
 
 

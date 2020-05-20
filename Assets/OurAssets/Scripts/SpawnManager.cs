@@ -118,13 +118,12 @@ public class SpawnManager: MonoBehaviour
 	public void adjustVariables()
 	{
 		playerAsteroidCount = gm.GetComponent<GameManager>().asteroidCounter;
-		float newPlayerSpeed;
 
 		switch (playerAsteroidCount)
 		{
 			case 0:
 				asteroidSpeed = 4;
-				repeatSpawning = 1f;
+				repeatSpawning = 1.5f;
 				spawnPointAvailable = 2;
 
 				adjustedVariableInfo();
@@ -132,7 +131,7 @@ public class SpawnManager: MonoBehaviour
 
 			case 5:
 				asteroidSpeed = 4;
-				repeatSpawning = .9f;
+				repeatSpawning = 1f;
 				spawnPointAvailable = 3;
 
 				adjustedVariableInfo();
@@ -140,7 +139,7 @@ public class SpawnManager: MonoBehaviour
 
 			case 10:
 				asteroidSpeed = 4;
-				repeatSpawning = .8f;
+				repeatSpawning = .9f;
 				spawnPointAvailable = 4;
 
 
@@ -149,7 +148,7 @@ public class SpawnManager: MonoBehaviour
 
 			case 15:
 				asteroidSpeed = 4;
-				repeatSpawning = .7f;
+				repeatSpawning = .8f;
 				spawnPointAvailable = 5;
 
 				adjustedVariableInfo();
@@ -157,7 +156,7 @@ public class SpawnManager: MonoBehaviour
 
 			case 20:
 				asteroidSpeed = 4;
-				repeatSpawning = .6f;
+				repeatSpawning = .7f;
 
 				adjustedVariableInfo();
 				break;
@@ -201,14 +200,14 @@ public class SpawnManager: MonoBehaviour
 
 			case 50:
 				asteroidSpeed = 5.2f;
-				repeatSpawning = .7f;
+				repeatSpawning = .8f;
 
 				adjustedVariableInfo();
 				break;
 
 			case 55:
 				asteroidSpeed = 5.4f;
-				repeatSpawning = .8f;
+				repeatSpawning = .7f;
 
 				adjustedVariableInfo();
 				break;
@@ -255,7 +254,7 @@ public class SpawnManager: MonoBehaviour
 
 			case 110:
 				asteroidSpeed = 6;
-				repeatSpawning = .6f;
+				repeatSpawning = .7f;
 
 
 				adjustedVariableInfo();
@@ -263,13 +262,13 @@ public class SpawnManager: MonoBehaviour
 
 			case 115:
 				asteroidSpeed = 6f;
-
+				repeatSpawning = .6f;
 				adjustedVariableInfo();
 				break;
 
 			case 150:
 				asteroidSpeed = 6f;
-				repeatSpawning = 0.4f;
+				repeatSpawning = 0.5f;
 
 				adjustedVariableInfo();
 				break;

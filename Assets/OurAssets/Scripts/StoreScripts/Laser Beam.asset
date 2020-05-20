@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Laser Beam
   m_EditorClassIdentifier: 
   powerUpName: Laser Beam
-  description: Upgrading will increase the power ups duration.
+  description: Upgrading will increase the power ups duration by 1.5s
   artwork: {fileID: 21300000, guid: b7c8f06babaca614a959a7d3e1f79f20, type: 3}

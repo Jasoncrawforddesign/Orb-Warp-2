@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ExtraPaddle
   m_EditorClassIdentifier: 
   powerUpName: Extra Paddle
-  description: Upgrading will increase the power ups duration.
+  description: Upgrading will increase the power ups duration by 1.5s
   artwork: {fileID: 21300000, guid: 9b69cdced5ce93242b0b44734af72889, type: 3}

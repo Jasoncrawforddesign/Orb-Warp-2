@@ -81,6 +81,8 @@ AudioMixerController:
     name: vol2
   - guid: 785dc54441fd1c6429b2bcde4a7ec562
     name: volMenuMusic
+  - guid: eaacca85b3a45fd46a6e7656720a3668
+    name: GameVol
   m_AudioMixerGroupViews:
   - guids:
     - c767909b96939814f9de3126b71ba096

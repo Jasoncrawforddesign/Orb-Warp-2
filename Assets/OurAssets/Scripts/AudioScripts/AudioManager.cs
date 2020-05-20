@@ -8,6 +8,9 @@ public class AudioManager : MonoBehaviour
 
 	public AudioMixerSnapshot menuMusic;
 	public AudioMixerSnapshot gameMusic;
+	public AudioMixer masterMixer;
+
+	//public AudioSource
 
 	public Sound_Effect[] soundEffects;
 
@@ -70,6 +73,16 @@ public class AudioManager : MonoBehaviour
 		}
 		
 
+	}
+
+	public void muteVol()
+	{
+		masterMixer.SetFloat("GameVol",Mathf.Log10(0.0001f) * 20);
+	}
+
+	public void unMuteVol()
+	{
+		masterMixer.SetFloat("GameVol", Mathf.Log10(1f) * 20);
 	}
 
 }

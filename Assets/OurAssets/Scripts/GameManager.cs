@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
 		SaveSystem.InitialSave(this);
 		//Assigning Highscores
 		highScoreText.text = highScore.ToString();
-		currencyText.text = "$" + playerCurrency.ToString();
+		currencyText.text = "<sprite index= 0> " + playerCurrency.ToString();
 		MainMenu_Panel.SetActive(true);
 		//Loading pickUpText components and assigning private variables.
 		pickupText = currentPickupText.GetComponent<Text>();
@@ -210,6 +210,7 @@ public class GameManager : MonoBehaviour
 
 	void endRun()
 	{
+		tweenManager.playGUIAnim(false);
 		tweenManager.playEndResultPanel(true);
 		test_ring.GetComponent<DOTweenAnimation>().DORewind();
 
@@ -233,9 +234,9 @@ public class GameManager : MonoBehaviour
 		laserObject.SetActive(false);
 		secondPaddle.SetActive(false);
 		playerControl.GetComponent<PlayerController>().playerSpeed = currentSpeed;
-		gui_Panel.SetActive(false);
+		//gui_Panel.SetActive(false);
 		storeManager.turnOnAd();
-		forcedAd();
+		//forcedAd();
 	}
 
 	#endregion
@@ -243,6 +244,7 @@ public class GameManager : MonoBehaviour
 	#region Use this function to start a run
 	public void playGame()
 	{
+		tweenManager.playGUIAnim(true);
 		playerControl.GetComponent<PlayerController>().playerSpeed = 40;
 		tweenManager.playEndResultPanel(false);
 		MainMenu_Panel.gameObject.GetComponent<DOTweenAnimation>().DOPlayBackwards();
@@ -254,7 +256,7 @@ public class GameManager : MonoBehaviour
 
 		//MainMenu_Panel.SetActive(false);
 		playerControl.GetComponent<PlayerController>().resetPlayer();
-		gui_Panel.SetActive(true);
+		//gui_Panel.SetActive(true);
 		checkShieldMax();
 		//pickUpTextAnimation();
 		spawnManager.SetActive(true);
@@ -269,14 +271,14 @@ public class GameManager : MonoBehaviour
 	public void addCurrency(int cash)
 	{
 		playerCurrency += cash;
-		currencyText.text = "$" + playerCurrency.ToString();
-		
+		currencyText.text = "<sprite index= 0> " + playerCurrency.ToString();
+
 	}
 
 	public void lessCurrency(int lessAmount)
 	{
 		playerCurrency -= lessAmount;
-		currencyText.text = "$" + playerCurrency.ToString();
+		currencyText.text = "<sprite index= 0> " + playerCurrency.ToString();
 	}
 
 
@@ -333,10 +335,10 @@ public class GameManager : MonoBehaviour
 	IEnumerator rotationPickup()
 	{
 		isPickupActive = true;
-		pickupText.text = "Increase Speed";
+		pickupText.text = "Speed Boost";
 		currentPickupText.SetActive(true);
 		//currentSpeed = playerControl.GetComponent<PlayerController>().playerSpeed;
-		playerControl.GetComponent<PlayerController>().playerSpeedis(5);
+		playerControl.GetComponent<PlayerController>().playerSpeedis(6);
 		//Debug.Log("rotate Active");
 		yield return new WaitForSeconds(rotationSpeedTimer - pickUpAnimLength);
 
@@ -347,7 +349,7 @@ public class GameManager : MonoBehaviour
 		pickUpTextViewable();
 
 		//Debug.Log("rotate deactive");
-		playerControl.GetComponent<PlayerController>().playerSpeedis(-5);
+		playerControl.GetComponent<PlayerController>().playerSpeedis(-6);
 		pickupText.text = null;
 		pickUpSpawnCooldown();
 		isPickupActive = false;
@@ -380,7 +382,7 @@ public class GameManager : MonoBehaviour
 	IEnumerator oneUseShieldPickup()
 	{
 		isPickupActive = true;
-		pickupText.text = "invincibility";
+		pickupText.text = "Invincibility";
 		currentPickupText.SetActive(true);
 		shieldObject.SetActive(true);
 		//Debug.Log("shield Active");
@@ -706,19 +708,19 @@ public class GameManager : MonoBehaviour
 		highScore = 0;
 
 		speedLevel = 0;
-		rotationSpeedTimer = 10;
+		rotationSpeedTimer = 5;
 
 		invincibilityLevel = 0;
-		shieldObjTimer = 10;
+		shieldObjTimer = 5;
 
 		doublePointsLevel = 0;
-		doublePointsTimer = 10;
+		doublePointsTimer = 5;
 
 		extraPaddleLevel = 0;
-		extraPaddleTimer = 10;
+		extraPaddleTimer = 5;
 
 		laserbeamLevel = 0;
-		laserObjTimer = 6;
+		laserObjTimer = 5;
 
 		highScoreText.text = highScore.ToString();
 		currencyText.text = "$" + playerCurrency.ToString();
@@ -729,10 +731,10 @@ public class GameManager : MonoBehaviour
 
 	public void forcedAd()
 	{
-		if (currentRunsCompleted == 5)
+		if (currentRunsCompleted == 1)
 		{
 			adManager.DisplayAd();
-			currentRunsCompleted = 0;
+			currentRunsCompleted = 1;
 		}
 		else
 			currentRunsCompleted += 1;

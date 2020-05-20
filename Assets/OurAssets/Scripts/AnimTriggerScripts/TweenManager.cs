@@ -13,6 +13,10 @@ public class TweenManager : MonoBehaviour
 
 	public GameObject gameComponents;
 
+	public GameObject controlsUI;
+
+	public GameObject gUI;
+
     public void playGameComponentAnim(bool play)
 	{
 		if(play == true)
@@ -60,5 +64,32 @@ public class TweenManager : MonoBehaviour
 			MainMenu.GetComponent<DOTweenAnimation>().DOPlayBackwards();
 		}
 	}
+
+
+	public void playControlUIAnim(bool play)
+	{
+		if(play == true)
+		{
+			controlsUI.GetComponent<DOTweenAnimation>().DOPlayForward();
+		}
+		else
+		{
+			controlsUI.GetComponent<DOTweenAnimation>().DORewind();
+		}
+
+	}
+
+	public void playGUIAnim(bool play)
+	{
+		if (play == true)
+		{
+			gUI.GetComponent<DOTweenAnimation>().DOPlayForward();
+		}
+		else
+		{
+			gUI.GetComponent<DOTweenAnimation>().DORewind();
+		}
+	}
+
 
 }

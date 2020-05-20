@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 	public GameObject endGamePopupObject;
 	public TweenManager tweenManager;
 	public AudioManager audioManager;
+	public SettingsManager settingsManager;
 
 	public ParticleSystem asteroidParticlePrefab;
 
@@ -142,6 +143,7 @@ public class GameManager : MonoBehaviour
 		spawnManager.SetActive(false);
 		pickUpAnim.enabled = false;
 		pickUpAllowed();
+		settingsManager.checkSettings();
 	}
 
     // Update is called once per frame
